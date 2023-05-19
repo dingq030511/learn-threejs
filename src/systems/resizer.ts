@@ -1,11 +1,10 @@
 import { PerspectiveCamera, WebGLRenderer } from 'three';
 
 export class Resizer {
-  constructor(private container: Element,private camera: PerspectiveCamera,private renderer: WebGLRenderer,private onResize: ()=>void){
+  constructor(private container: Element,private camera: PerspectiveCamera,private renderer: WebGLRenderer){
     this.setSize();
     window.addEventListener('resize', ()=>{
       this.setSize();
-      this.onResize();
     });
   }
 
