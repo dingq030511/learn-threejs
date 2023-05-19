@@ -26,7 +26,8 @@ export class World {
     container.append(this.renderer.domElement);
     this.controls = createControls(this.camera, this.renderer.domElement);
     const cube = createCube();
-    this.loop.updatables.push(cube);
+    // this.loop.updatables.push(cube);
+    this.loop.updatables.push(this.controls);
     const light = createLights();
     this.scene.add(cube, light);
     const resizer = new Resizer(container, this.camera, this.renderer);

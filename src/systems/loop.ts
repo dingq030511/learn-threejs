@@ -1,12 +1,15 @@
-import { Clock, Mesh, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
+type Updatable = {
+  tick: (delta: number) => void;
+};
 export class Loop {
   private clock: Clock;
   constructor(
     private camera: PerspectiveCamera,
     private scene: Scene,
     private renderer: WebGLRenderer,
-    public updatables: Array<Mesh<any, any>> = []
+    public updatables: Array<Updatable> = []
   ) {
     this.clock = new Clock();
   }
@@ -23,7 +26,7 @@ export class Loop {
 
   tick() {
     const delta = this.clock.getDelta();
-    for(const obj of this.updatables){
+    for (const obj of this.updatables) {
       obj.tick(delta);
     }
   }

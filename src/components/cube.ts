@@ -16,7 +16,7 @@ export function createCube() {
 
 function createMaterial(){
   const textureLoader = new TextureLoader();
-  const texture = textureLoader.load('/assets/textures/uv-test-bw.png')
+  const texture = textureLoader.load('/assets/textures/wall.jpg')
   const material = new MeshStandardMaterial({
     map: texture,
   });
