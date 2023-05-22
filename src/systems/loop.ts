@@ -27,7 +27,7 @@ export class Loop {
   tick() {
     const delta = this.clock.getDelta();
     for (const obj of this.updatables) {
-      obj.tick(delta);
+      obj.tick?.(delta);
     }
   }
 }

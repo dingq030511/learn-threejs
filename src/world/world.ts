@@ -8,6 +8,7 @@ import { Loop } from '../systems/loop';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createControls } from '../systems/controls';
 import { createMeshGroup } from '../components/meshGroup';
+import { Train } from '../components/train/train';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -25,11 +26,11 @@ export class World {
     }
     container.append(this.renderer.domElement);
     this.controls = createControls(this.camera, this.renderer.domElement);
-    const meshGroup = createMeshGroup();
+    const train = new Train();
     // this.loop.updatables.push(cube);
-    this.loop.updatables.push(this.controls, meshGroup);
+    this.loop.updatables.push(this.controls, train);
     const {ambientLight, mainLight} = createLights();
-    this.scene.add(meshGroup, ambientLight, mainLight);
+    this.scene.add(train, ambientLight, mainLight);
     const resizer = new Resizer(container, this.camera, this.renderer);
   }
 
