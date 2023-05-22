@@ -1,3 +1,10 @@
 import { World } from '.';
-const world = new World(document.body);
-world.start();
+async function main() {
+  const world = new World(document.body);
+  await world.init();
+  world.start();
+}
+
+main().catch(e=>{
+  console.error(e);
+})

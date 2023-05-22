@@ -8,6 +8,8 @@ declare module 'three' {
   interface Mesh extends Tickable {}
 
   interface Group extends Tickable {}
+
+  interface Object3D extends Tickable {}
 }
 
 declare module 'three/examples/jsm/controls/OrbitControls.js' {
