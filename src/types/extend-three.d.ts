@@ -1,8 +1,14 @@
 import 'three';
 import 'three/examples/jsm/controls/OrbitControls.js';
+
+type Tickable = {
+  tick: (delta: number)=>void
+}
 declare module 'three' {
-  interface Mesh {
-    tick: (delta: number)=>void
+  interface Mesh extends Tickable{
+  }
+
+  interface Group extends Tickable{
   }
 }
 

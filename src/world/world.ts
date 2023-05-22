@@ -2,12 +2,12 @@ import { PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { createCamera } from '../components/camera';
 import { createScene } from '../components/scene';
 import { createRenderer } from '../systems/renderer';
-import { createCube } from '../components/cube';
 import { Resizer } from '../systems/resizer';
 import { createLights } from '../components/lights';
 import { Loop } from '../systems/loop';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createControls } from '../systems/controls';
+import { createMeshGroup } from '../components/meshGroup';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -25,11 +25,11 @@ export class World {
     }
     container.append(this.renderer.domElement);
     this.controls = createControls(this.camera, this.renderer.domElement);
-    const cube = createCube();
+    const meshGroup = createMeshGroup();
     // this.loop.updatables.push(cube);
-    this.loop.updatables.push(this.controls);
-    const {ambientLight, mainLight, hemisphereLight} = createLights();
-    this.scene.add(cube, hemisphereLight, mainLight);
+    this.loop.updatables.push(this.controls, meshGroup);
+    const {ambientLight, mainLight} = createLights();
+    this.scene.add(meshGroup, ambientLight, mainLight);
     const resizer = new Resizer(container, this.camera, this.renderer);
   }
 
