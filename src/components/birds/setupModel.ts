@@ -1,6 +1,5 @@
 import { AnimationMixer } from 'three';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { mod } from 'three/examples/jsm/nodes/Nodes.js';
 
 export function setupModel(data: GLTF) {
   const model = data.scene.children[0];
