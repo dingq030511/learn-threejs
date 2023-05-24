@@ -4,8 +4,11 @@ type Updatable = {
   tick?: (delta: number) => void;
   update?: (delta?: number) => void;
 };
+
+type TaskCallback = (delta?: number) => void
 export class Loop {
   private clock: Clock;
+  private tasks: Array<TaskCallback> = [];
   constructor(
     private camera: PerspectiveCamera,
     private scene: Scene,
@@ -15,9 +18,18 @@ export class Loop {
     this.clock = new Clock();
   }
 
+  register(task: TaskCallback){
+    this.tasks.push(task);
+  }
+
+  unregister(task: TaskCallback){
+    const index = this.tasks.findIndex(t=>t===task);
+    this.tasks.splice(index, 1);
+  }
+
   start() {
     this.renderer.setAnimationLoop(() => {
-      this.tick();
+      this.update();
       this.renderer.render(this.scene, this.camera);
     });
   }
@@ -25,7 +37,7 @@ export class Loop {
     this.renderer.setAnimationLoop(null);
   }
 
-  tick() {
+  update() {
     const delta = this.clock.getDelta();
     for (const obj of this.updatables) {
       if(obj.update){
@@ -33,6 +45,9 @@ export class Loop {
       } else if(obj.tick){
         obj.tick(delta);
       }
+    }
+    for(const task of this.tasks){
+      task(delta);
     }
   }
 }

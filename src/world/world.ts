@@ -13,6 +13,7 @@ import { createStats } from '../systems/stats';
 import { createAxesHelper } from '../systems/axes-helper';
 import { createGround } from '../components/ground';
 import { createCube } from '../components/cube';
+import GUI from 'lil-gui';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -39,6 +40,16 @@ export class World {
     const { spotLight } = createLights();
     const ground = createGround();
     const cube = createCube();
+    const params = {
+      rotationSpeed: 0.01
+    }
+    this.loop.register(()=>{
+      cube.rotation.x += params.rotationSpeed
+      cube.rotation.y += params.rotationSpeed
+      cube.rotation.z += params.rotationSpeed
+    });
+    const gui = new GUI();
+    gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     this.scene.add(spotLight, ground, cube);
     this.camera.lookAt(this.scene.position);
     const resizer = new Resizer(container, this.camera, this.renderer);
