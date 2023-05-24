@@ -1,4 +1,4 @@
-import { AmbientLight, DirectionalLight, HemisphereLight } from 'three';
+import { AmbientLight, DirectionalLight, HemisphereLight, SpotLight, Vector2 } from 'three';
 
 export function createLights() {
   const ambientLight = new AmbientLight('white', 0.5);
@@ -9,5 +9,11 @@ export function createLights() {
     2
   );
   mainLight.position.set(10, 10, 10);
-  return { ambientLight, mainLight, hemisphereLight };
+  const spotLight = new SpotLight();
+  spotLight.position.set(-40, 40, -15);
+  spotLight.castShadow = true;
+  spotLight.shadow.mapSize = new Vector2(1024, 1024);
+  spotLight.shadow.camera.far = 130;
+  spotLight.shadow.camera.near = 40;
+  return { ambientLight, mainLight, hemisphereLight, spotLight };
 }

@@ -36,10 +36,10 @@ export class World {
     // const train = new Train();
     // this.loop.updatables.push(cube);
     this.loop.updatables.push(this.controls, this.stats);
-    const { ambientLight, mainLight } = createLights();
+    const { spotLight } = createLights();
     const ground = createGround();
     const cube = createCube();
-    this.scene.add(ambientLight, mainLight, ground, cube);
+    this.scene.add(spotLight, ground, cube);
     this.camera.lookAt(this.scene.position);
     const resizer = new Resizer(container, this.camera, this.renderer);
     container.append(this.stats.dom);
