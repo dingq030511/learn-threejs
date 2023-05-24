@@ -10,6 +10,8 @@ import { createControls } from '../systems/controls';
 import { createMeshGroup } from '../components/meshGroup';
 import { Train } from '../components/train/train';
 import { loadBirds } from '../components/birds/birds';
+import type Stats from 'three/examples/jsm/libs/stats.module.js';
+import { createStats } from '../systems/stats';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -17,6 +19,7 @@ export class World {
   private renderer: WebGLRenderer;
   private loop: Loop;
   private controls: OrbitControls;
+  private stats: Stats;
   constructor(container: string | Element) {
     this.camera = createCamera();
     this.scene = createScene();
@@ -27,9 +30,11 @@ export class World {
     }
     container.append(this.renderer.domElement);
     this.controls = createControls(this.camera, this.renderer.domElement);
+    this.stats = createStats();
+    container.append(this.stats.dom);
     // const train = new Train();
     // this.loop.updatables.push(cube);
-    this.loop.updatables.push(this.controls);
+    this.loop.updatables.push(this.controls, this.stats);
     const { ambientLight, mainLight } = createLights();
     this.scene.add(ambientLight, mainLight);
     const resizer = new Resizer(container, this.camera, this.renderer);

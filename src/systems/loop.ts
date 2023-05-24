@@ -1,7 +1,8 @@
 import { Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 
 type Updatable = {
-  tick: (delta: number) => void;
+  tick?: (delta: number) => void;
+  update?: (delta?: number) => void;
 };
 export class Loop {
   private clock: Clock;
@@ -27,7 +28,11 @@ export class Loop {
   tick() {
     const delta = this.clock.getDelta();
     for (const obj of this.updatables) {
-      obj.tick?.(delta);
+      if(obj.update){
+        obj.update(delta);
+      } else if(obj.tick){
+        obj.tick(delta);
+      }
     }
   }
 }
