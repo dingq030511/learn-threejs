@@ -1,7 +1,7 @@
 import { World } from '.';
 async function main() {
   const world = new World(document.body);
-  await world.init();
+  // await world.init();
   world.start();
 }
 

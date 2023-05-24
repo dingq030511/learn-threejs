@@ -7,11 +7,12 @@ import { createLights } from '../components/lights';
 import { Loop } from '../systems/loop';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createControls } from '../systems/controls';
-import { createMeshGroup } from '../components/meshGroup';
-import { Train } from '../components/train/train';
 import { loadBirds } from '../components/birds/birds';
 import type Stats from 'three/examples/jsm/libs/stats.module.js';
 import { createStats } from '../systems/stats';
+import { createAxesHelper } from '../systems/axes-helper';
+import { createGround } from '../components/ground';
+import { createCube } from '../components/cube';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -24,26 +25,31 @@ export class World {
     this.camera = createCamera();
     this.scene = createScene();
     this.renderer = createRenderer();
+    const axes = createAxesHelper();
+    this.scene.add(axes);
     this.loop = new Loop(this.camera, this.scene, this.renderer);
     if (typeof container === 'string') {
       container = document.querySelector(container)!;
     }
-    container.append(this.renderer.domElement);
     this.controls = createControls(this.camera, this.renderer.domElement);
     this.stats = createStats();
-    container.append(this.stats.dom);
     // const train = new Train();
     // this.loop.updatables.push(cube);
     this.loop.updatables.push(this.controls, this.stats);
     const { ambientLight, mainLight } = createLights();
-    this.scene.add(ambientLight, mainLight);
+    const ground = createGround();
+    const cube = createCube();
+    this.scene.add(ambientLight, mainLight, ground, cube);
+    this.camera.lookAt(this.scene.position);
     const resizer = new Resizer(container, this.camera, this.renderer);
+    container.append(this.stats.dom);
+    container.append(this.renderer.domElement);
   }
 
   async init() {
     const { parrot, flamingo, stork } = await loadBirds();
     this.controls.target.copy(parrot.position);
-    this.loop.updatables.push(parrot, flamingo, stork)
+    this.loop.updatables.push(parrot, flamingo, stork);
     this.scene.add(parrot, flamingo, stork);
   }
 
