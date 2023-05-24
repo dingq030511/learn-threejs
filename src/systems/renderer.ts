@@ -5,6 +5,6 @@ export function createRenderer(){
     // 抗锯齿
     antialias: true, 
   });
-  
+  renderer.shadowMap.enabled = true;
   return renderer;
 }

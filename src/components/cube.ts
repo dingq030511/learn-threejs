@@ -5,6 +5,7 @@ export function createCube() {
   const material = createMaterial();
   const cube = new Mesh(geometry, material);
   cube.position.set(-4, 3, 0);
+  cube.castShadow = true;
   return cube;
 }
 
