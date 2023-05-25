@@ -4,9 +4,9 @@ export function createLights() {
   const ambientLight = new AmbientLight('white', 0.5);
   const mainLight = new DirectionalLight('white', 2);
   const hemisphereLight = new HemisphereLight(
-    'white', // bright sky color
-    'darkslategrey', // dim ground color
-    2
+    0x0000ff, // bright sky color
+    0x00ff00, // dim ground color
+    0.6
   );
   mainLight.position.set(10, 10, 10);
   const spotLight = new SpotLight(0xffffff, 2);

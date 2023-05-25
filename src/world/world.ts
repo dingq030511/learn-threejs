@@ -14,6 +14,7 @@ import { createAxesHelper } from '../systems/axes-helper';
 import { createGround } from '../components/ground';
 import { createCube } from '../components/cube';
 import GUI from 'lil-gui';
+import { createSphere } from '../components/sphere';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -37,7 +38,7 @@ export class World {
     // const train = new Train();
     // this.loop.updatables.push(cube);
     this.loop.updatables.push(this.controls, this.stats);
-    const { spotLight } = createLights();
+    const { spotLight, hemisphereLight } = createLights();
     const ground = createGround();
     const cube = createCube();
     const params = {
@@ -54,11 +55,13 @@ export class World {
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
-    this.scene.add(spotLight, ground, cube);
+    this.scene.add(spotLight, hemisphereLight, ground, cube);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
-    const debugCamera = new CameraHelper(spotLight.shadow.camera);
-    this.scene.add(debugCamera);
+    // const debugCamera = new CameraHelper(spotLight.shadow.camera);
+    // this.scene.add(debugCamera);
+    const sphere = createSphere();
+    this.scene.add(sphere);
     const resizer = new Resizer(container, this.camera, this.renderer);
     container.append(this.stats.dom);
     container.append(this.renderer.domElement);
