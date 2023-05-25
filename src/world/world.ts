@@ -1,4 +1,13 @@
-import { CameraHelper, Fog, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import {
+  AdditiveBlending,
+  CameraHelper,
+  Color,
+  Fog,
+  PerspectiveCamera,
+  Scene,
+  TextureLoader,
+  WebGLRenderer,
+} from 'three';
 import { createCamera } from '../components/camera';
 import { createScene } from '../components/scene';
 import { createRenderer } from '../systems/renderer';
@@ -15,6 +24,7 @@ import { createGround } from '../components/ground';
 import { createCube } from '../components/cube';
 import GUI from 'lil-gui';
 import { createSphere } from '../components/sphere';
+import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -23,18 +33,27 @@ export class World {
   private loop: Loop;
   private controls: OrbitControls;
   private stats: Stats;
+  private container: Element;
   constructor(container: string | Element) {
     this.camera = createCamera();
     this.scene = createScene();
     this.renderer = createRenderer();
-    const axes = createAxesHelper();
-    this.scene.add(axes);
     this.loop = new Loop(this.camera, this.scene, this.renderer);
+    this.stats = createStats();
     if (typeof container === 'string') {
-      container = document.querySelector(container)!;
+      this.container = document.querySelector(container)!;
+    } else {
+      this.container = container;
     }
     this.controls = createControls(this.camera, this.renderer.domElement);
-    this.stats = createStats();
+    this.container.append(this.stats.dom);
+    this.container.append(this.renderer.domElement);
+    this.init();
+  }
+
+  async init() {
+    const axes = createAxesHelper();
+    this.scene.add(axes);
     // const train = new Train();
     // this.loop.updatables.push(cube);
     this.loop.updatables.push(this.controls, this.stats);
@@ -62,16 +81,23 @@ export class World {
     // this.scene.add(debugCamera);
     const sphere = createSphere();
     this.scene.add(sphere);
-    const resizer = new Resizer(container, this.camera, this.renderer);
-    container.append(this.stats.dom);
-    container.append(this.renderer.domElement);
-  }
-
-  async init() {
-    const { parrot, flamingo, stork } = await loadBirds();
-    this.controls.target.copy(parrot.position);
-    this.loop.updatables.push(parrot, flamingo, stork);
-    this.scene.add(parrot, flamingo, stork);
+    // const { parrot, flamingo, stork } = await loadBirds();
+    // this.controls.target.copy(parrot.position);
+    // this.loop.updatables.push(parrot, flamingo, stork);
+    // this.scene.add(parrot, flamingo, stork);
+    const textureLoader = new TextureLoader();
+    const textureFlare = textureLoader.load('/assets/textures/flares/lensflare0.png');
+    const textureFlare3 = textureLoader.load('/assets/textures/flares/lensflare3.png');
+    const flareColor = new Color(0xffaacc);
+    const lensflare = new Lensflare();
+    lensflare.addElement(new LensflareElement(textureFlare, 350, 0, flareColor))
+    lensflare.addElement(new LensflareElement(textureFlare3, 60, 0.6, flareColor))
+    lensflare.addElement(new LensflareElement(textureFlare3, 70, 0.7, flareColor))
+    lensflare.addElement(new LensflareElement(textureFlare3, 120, 0.9, flareColor))
+    lensflare.addElement(new LensflareElement(textureFlare3, 70, 1.0, flareColor))
+    lensflare.position.copy(spotLight.position);
+    this.scene.add(lensflare);
+    const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
 
   render() {
