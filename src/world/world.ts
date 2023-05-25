@@ -31,6 +31,8 @@ import { createSphere } from '../components/sphere';
 import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js';
 import { loadGopher } from '../components/gopher';
 import { createPoints } from '../components/points';
+import { ParametricGeometry } from 'three/examples/jsm/geometries/ParametricGeometry.js';
+import { radialWave } from '../components/radialWave';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -106,7 +108,7 @@ export class World {
     const material = new MeshLambertMaterial({
       color: new Color('rgb(119,119,255)'),
       emissive: 0x2a2a2a,
-      side: DoubleSide
+      side: DoubleSide,
     });
     // gopher.children.forEach(e=>{
     //   if(e instanceof Mesh){
@@ -114,10 +116,13 @@ export class World {
     //   }
     // })
     // this.scene.add(gopher);
-    const points = createPoints();
-    const latheGeometry = new LatheGeometry(points, 100, 0, Math.PI);
-    const latheMesh = new Mesh(latheGeometry, material);
-    this.scene.add(latheMesh);
+    // const points = createPoints();
+    // const latheGeometry = new LatheGeometry(points, 100, 0, Math.PI);
+    // const latheMesh = new Mesh(latheGeometry, material);
+    // this.scene.add(latheMesh);
+    const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
+    const parametricMesh = new Mesh(parametricGeometry, material);
+    this.scene.add(parametricMesh);
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
