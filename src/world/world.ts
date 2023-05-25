@@ -3,6 +3,8 @@ import {
   CameraHelper,
   Color,
   Fog,
+  Mesh,
+  MeshLambertMaterial,
   PerspectiveCamera,
   Scene,
   TextureLoader,
@@ -25,6 +27,7 @@ import { createCube } from '../components/cube';
 import GUI from 'lil-gui';
 import { createSphere } from '../components/sphere';
 import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js';
+import { loadGopher } from '../components/gopher';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -57,7 +60,7 @@ export class World {
     // const train = new Train();
     // this.loop.updatables.push(cube);
     this.loop.updatables.push(this.controls, this.stats);
-    const { spotLight, hemisphereLight } = createLights();
+    const { spotLight, ambientLight } = createLights();
     const ground = createGround();
     const cube = createCube();
     const params = {
@@ -74,13 +77,13 @@ export class World {
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
-    this.scene.add(spotLight, hemisphereLight, ground, cube);
+    this.scene.add(spotLight, ambientLight, ground);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
     // const debugCamera = new CameraHelper(spotLight.shadow.camera);
     // this.scene.add(debugCamera);
     const sphere = createSphere();
-    this.scene.add(sphere);
+    // this.scene.add(sphere);
     // const { parrot, flamingo, stork } = await loadBirds();
     // this.controls.target.copy(parrot.position);
     // this.loop.updatables.push(parrot, flamingo, stork);
@@ -90,12 +93,23 @@ export class World {
     const textureFlare3 = textureLoader.load('/assets/textures/flares/lensflare3.png');
     const flareColor = new Color(0xffaacc);
     const lensflare = new Lensflare();
-    lensflare.addElement(new LensflareElement(textureFlare, 350, 0, flareColor))
-    lensflare.addElement(new LensflareElement(textureFlare3, 60, 0.6, flareColor))
-    lensflare.addElement(new LensflareElement(textureFlare3, 70, 0.7, flareColor))
-    lensflare.addElement(new LensflareElement(textureFlare3, 120, 0.9, flareColor))
-    lensflare.addElement(new LensflareElement(textureFlare3, 70, 1.0, flareColor))
+    lensflare.addElement(new LensflareElement(textureFlare, 350, 0, flareColor));
+    lensflare.addElement(new LensflareElement(textureFlare3, 60, 0.6, flareColor));
+    lensflare.addElement(new LensflareElement(textureFlare3, 70, 0.7, flareColor));
+    lensflare.addElement(new LensflareElement(textureFlare3, 120, 0.9, flareColor));
+    lensflare.addElement(new LensflareElement(textureFlare3, 70, 1.0, flareColor));
     lensflare.position.copy(spotLight.position);
+    const gopher = await loadGopher();
+    const material = new MeshLambertMaterial({
+      color: new Color('rgb(119,119,255)'),
+      emissive: 0x2a2a2a,
+    });
+    gopher.children.forEach(e=>{
+      if(e instanceof Mesh){
+        e.material = material;
+      }
+    })
+    this.scene.add(gopher);
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }

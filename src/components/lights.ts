@@ -9,7 +9,7 @@ export function createLights() {
     0.6
   );
   mainLight.position.set(10, 10, 10);
-  const spotLight = new SpotLight(0xffffff, 2);
+  const spotLight = new SpotLight(0xffffff, 1);
   spotLight.position.set(-40, 40, -15);
   spotLight.castShadow = true;
   spotLight.shadow.mapSize = new Vector2(1024, 1024);
