@@ -2,7 +2,9 @@ import {
   AdditiveBlending,
   CameraHelper,
   Color,
+  DoubleSide,
   Fog,
+  LatheGeometry,
   Mesh,
   MeshLambertMaterial,
   PerspectiveCamera,
@@ -28,6 +30,7 @@ import GUI from 'lil-gui';
 import { createSphere } from '../components/sphere';
 import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js';
 import { loadGopher } from '../components/gopher';
+import { createPoints } from '../components/points';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -99,17 +102,22 @@ export class World {
     lensflare.addElement(new LensflareElement(textureFlare3, 120, 0.9, flareColor));
     lensflare.addElement(new LensflareElement(textureFlare3, 70, 1.0, flareColor));
     lensflare.position.copy(spotLight.position);
-    const gopher = await loadGopher();
+    // const gopher = await loadGopher();
     const material = new MeshLambertMaterial({
       color: new Color('rgb(119,119,255)'),
       emissive: 0x2a2a2a,
+      side: DoubleSide
     });
-    gopher.children.forEach(e=>{
-      if(e instanceof Mesh){
-        e.material = material;
-      }
-    })
-    this.scene.add(gopher);
+    // gopher.children.forEach(e=>{
+    //   if(e instanceof Mesh){
+    //     e.material = material;
+    //   }
+    // })
+    // this.scene.add(gopher);
+    const points = createPoints();
+    const latheGeometry = new LatheGeometry(points, 100, 0, Math.PI);
+    const latheMesh = new Mesh(latheGeometry, material);
+    this.scene.add(latheMesh);
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
