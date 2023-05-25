@@ -41,15 +41,19 @@ export class World {
     const ground = createGround();
     const cube = createCube();
     const params = {
-      rotationSpeed: 0.01
-    }
-    this.loop.register(()=>{
-      cube.rotation.x += params.rotationSpeed
-      cube.rotation.y += params.rotationSpeed
-      cube.rotation.z += params.rotationSpeed
+      rotationSpeed: 0.01,
+      addCube: () => {
+        this.addCube();
+      },
+    };
+    this.loop.register(() => {
+      cube.rotation.x += params.rotationSpeed;
+      cube.rotation.y += params.rotationSpeed;
+      cube.rotation.z += params.rotationSpeed;
     });
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
+    gui.add(params, 'addCube');
     this.scene.add(spotLight, ground, cube);
     this.camera.lookAt(this.scene.position);
     const resizer = new Resizer(container, this.camera, this.renderer);
@@ -66,6 +70,16 @@ export class World {
 
   render() {
     this.renderer.render(this.scene, this.camera);
+  }
+
+  addCube() {
+    const cubeSize = Math.ceil(Math.random() * 3);
+    const cube = createCube(cubeSize);
+    cube.name = 'cube-' + this.scene.children.length;
+    cube.position.x = -30 + Math.round(Math.random() * 60);
+    cube.position.y = Math.round(Math.random() * 5);
+    cube.position.z = -20 + Math.round(Math.random() * 20);
+    this.scene.add(cube);
   }
 
   start() {

@@ -1,7 +1,7 @@
 import { BoxGeometry, Mesh, MeshStandardMaterial, TextureLoader } from 'three';
 
-export function createCube() {
-  const geometry = new BoxGeometry(4, 4, 4);
+export function createCube(cubeSize = 4) {
+  const geometry = new BoxGeometry(cubeSize, cubeSize, cubeSize);
   const material = createMaterial();
   const cube = new Mesh(geometry, material);
   cube.position.set(-4, 3, 0);
