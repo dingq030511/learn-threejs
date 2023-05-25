@@ -1,4 +1,4 @@
-import { Fog, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { CameraHelper, Fog, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { createCamera } from '../components/camera';
 import { createScene } from '../components/scene';
 import { createRenderer } from '../systems/renderer';
@@ -55,8 +55,10 @@ export class World {
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
     this.scene.add(spotLight, ground, cube);
-    this.scene.fog = new Fog(0xffffff, 0.015, 100);
+    // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
+    const debugCamera = new CameraHelper(spotLight.shadow.camera);
+    this.scene.add(debugCamera);
     const resizer = new Resizer(container, this.camera, this.renderer);
     container.append(this.stats.dom);
     container.append(this.renderer.domElement);
