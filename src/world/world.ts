@@ -128,8 +128,10 @@ export class World {
     // const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
     // const parametricMesh = new Mesh(parametricGeometry, material);
     // this.scene.add(parametricMesh);
-    const sprites = createSprites();
-    this.scene.add(sprites);
+    // const sprites = createSprites();
+    // this.scene.add(sprites);
+    const points = createPoints();
+    this.scene.add(points);
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }

@@ -1,11 +1,25 @@
-import { Vector2 } from 'three';
+import { BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Vector2, Vector3 } from 'three';
 
 export function createPoints() {
-  const points = [];
-  const height = 5;
-  const count = 30;
-  for (let i = 0; i < count; i++) {
-    points.push(new Vector2((Math.sin(i * 0.2) + Math.cos(i * 0.3)) * height + 12,   i - count + count / 2));
+  const geom = new BufferGeometry();
+  
+  const array: Array<number> = [];
+  const material = new PointsMaterial({
+    size: 2,
+    vertexColors: true,
+    color: 0xffffff
+  });
+  const colorArray: Array<number> = [];
+  for(let x = -15; x< 15;x++){
+    for(let y = -10;y<10;y++){
+      array.push(x * 4, y * 4, 0);
+      colorArray.push(Math.random(), Math.random(), Math.random());
+    }
   }
+  const colors = new Float32Array(colorArray)
+  const vertices = new Float32Array(array);
+  geom.setAttribute('position', new BufferAttribute(vertices, 3));
+  geom.setAttribute('color', new BufferAttribute(colors, 3));
+  const points = new Points(geom, material);
   return points;
 }
