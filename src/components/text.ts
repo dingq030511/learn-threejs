@@ -5,11 +5,11 @@ export async function createText() {
   const loader = new FontLoader();
   const font = await loader.loadAsync('/assets/fonts/bitstream_vera_sans_mono_roman.typeface.json');
   const options = {
-    size: 90,
-    height: 20,
+    size: 10,
+    height: 1,
     font,
     bevelThickness: 2,
-    bevelSize: 4,
+    bevelSize: 0.1,
     bevelSegments: 3,
     bevelEnabled: true,
     curveSegments: 12,
