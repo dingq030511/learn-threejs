@@ -130,7 +130,7 @@ export class World {
     // this.scene.add(parametricMesh);
     // const sprites = createSprites();
     // this.scene.add(sprites);
-    const points = createPoints();
+    const points = await createPoints();
     this.scene.add(points);
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);

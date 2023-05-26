@@ -1,22 +1,26 @@
-import { BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Texture, Vector2, Vector3 } from 'three';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Texture, TextureLoader, Vector2, Vector3 } from 'three';
 
-export function createPoints() {
+export async function createPoints() {
   const geom = new BufferGeometry();
 
   const array: Array<number> = [];
+  const loader = new TextureLoader();
+  const texture = await loader.loadAsync('/assets/textures/particles/raindrop-3.png');
   const material = new PointsMaterial({
     size: 2,
     vertexColors: true,
     transparent: true,
-    opacity: 1,
-    map: createGhostTexture(),
+    opacity: 0.6,
+    blending: AdditiveBlending,
+    sizeAttenuation: true,
+    map: texture,
     color: 0xffffff,
   });
   const colorArray: Array<number> = [];
   for (let x = -15; x < 15; x++) {
     for (let y = -10; y < 10; y++) {
-      array.push(x * 4, y * 4, Math.random()* 10);
-      colorArray.push(Math.random(), Math.random(), Math.random() );
+      array.push(x * 4, y * 4, Math.random()* 50 * (Math.random() > 0.5 ? 1: -1));
+      colorArray.push(1, 1, 1);
     }
   }
   const colors = new Float32Array(colorArray);
