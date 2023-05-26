@@ -33,6 +33,7 @@ import { loadGopher } from '../components/gopher';
 import { createPoints } from '../components/points';
 import { ParametricGeometry } from 'three/examples/jsm/geometries/ParametricGeometry.js';
 import { radialWave } from '../components/radialWave';
+import { createText } from '../components/text';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -120,6 +121,9 @@ export class World {
     // const latheGeometry = new LatheGeometry(points, 100, 0, Math.PI);
     // const latheMesh = new Mesh(latheGeometry, material);
     // this.scene.add(latheMesh);
+    
+    const text = await createText();
+    this.scene.add(text);
     const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
     const parametricMesh = new Mesh(parametricGeometry, material);
     this.scene.add(parametricMesh);
