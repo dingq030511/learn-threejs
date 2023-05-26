@@ -28,6 +28,8 @@ export async function createPoints() {
   geom.setAttribute('position', new BufferAttribute(vertices, 3));
   geom.setAttribute('color', new BufferAttribute(colors, 3));
   const points = new Points(geom, material);
+  const arrbuffer = geom.getAttribute('position');
+  console.log(arrbuffer, arrbuffer.getX(0));
   return points;
 }
 

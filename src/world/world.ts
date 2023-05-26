@@ -84,7 +84,8 @@ export class World {
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
-    this.scene.add(spotLight, ambientLight, ground);
+    // this.scene.add(ground);
+    this.scene.add(spotLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
     // const debugCamera = new CameraHelper(spotLight.shadow.camera);
@@ -132,6 +133,22 @@ export class World {
     // this.scene.add(sprites);
     const points = await createPoints();
     this.scene.add(points);
+    this.loop.register(()=>{
+      const positionArray = points.geometry.getAttribute('position');
+      for(let i =0;i<positionArray.count;i++){
+        let x = positionArray.getX(i) + 0.06;
+        let y = positionArray.getY(i) - 0.3;
+        if(x > 60){
+          x -= 120;
+        }
+        if(y < -40){
+          y+=80
+        }
+        positionArray.setX(i, x);
+        positionArray.setY(i, y);
+      }
+      positionArray.needsUpdate = true;
+    });
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
