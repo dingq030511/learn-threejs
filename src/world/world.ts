@@ -34,6 +34,7 @@ import { createPoints } from '../components/points';
 import { ParametricGeometry } from 'three/examples/jsm/geometries/ParametricGeometry.js';
 import { radialWave } from '../components/radialWave';
 import { createText } from '../components/text';
+import { createSprites } from '../components/sprites';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -122,11 +123,13 @@ export class World {
     // const latheMesh = new Mesh(latheGeometry, material);
     // this.scene.add(latheMesh);
     
-    const text = await createText();
-    this.scene.add(text);
-    const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
-    const parametricMesh = new Mesh(parametricGeometry, material);
-    this.scene.add(parametricMesh);
+    // const text = await createText();
+    // this.scene.add(text);
+    // const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
+    // const parametricMesh = new Mesh(parametricGeometry, material);
+    // this.scene.add(parametricMesh);
+    const sprites = createSprites();
+    this.scene.add(sprites);
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
