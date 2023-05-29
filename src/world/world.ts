@@ -7,9 +7,11 @@ import {
   LatheGeometry,
   Mesh,
   MeshLambertMaterial,
+  OrthographicCamera,
   PerspectiveCamera,
   Scene,
   TextureLoader,
+  Vector3,
   WebGLRenderer,
 } from 'three';
 import { createCamera } from '../components/camera';
@@ -35,9 +37,12 @@ import { ParametricGeometry } from 'three/examples/jsm/geometries/ParametricGeom
 import { radialWave } from '../components/radialWave';
 import { createText } from '../components/text';
 import { createSprites } from '../components/sprites';
+import { createOrthoCamera } from '../components/orthoCamera';
+import { createSprite } from '../components/sprite';
 
 export class World {
   private camera: PerspectiveCamera;
+  private orthoCamera: OrthographicCamera;
   private scene: Scene;
   private renderer: WebGLRenderer;
   private loop: Loop;
@@ -46,6 +51,7 @@ export class World {
   private container: Element;
   constructor(container: string | Element) {
     this.camera = createCamera();
+    this.orthoCamera = createOrthoCamera();
     this.scene = createScene();
     this.renderer = createRenderer();
     this.loop = new Loop(this.camera, this.scene, this.renderer);
@@ -88,6 +94,7 @@ export class World {
     this.scene.add(spotLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
+    // this.orthoCamera.lookAt(new Vector3(20, 30, 0));
     // const debugCamera = new CameraHelper(spotLight.shadow.camera);
     // this.scene.add(debugCamera);
     const sphere = createSphere();
@@ -129,8 +136,8 @@ export class World {
     // const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
     // const parametricMesh = new Mesh(parametricGeometry, material);
     // this.scene.add(parametricMesh);
-    // const sprites = createSprites();
-    // this.scene.add(sprites);
+    const sprites = createSprites();
+    this.scene.add(sprites);
     // const points = await createPoints('/assets/textures/particles/raindrop-3.png');
     // this.scene.add(points);
     // this.loop.register(()=>{
@@ -149,34 +156,32 @@ export class World {
     //   }
     //   positionArray.needsUpdate = true;
     // });
-    const result = await Promise.all([
-      createPoints('/assets/textures/particles/snowflake1_t.png'),
-      createPoints('/assets/textures/particles/snowflake2_t.png'),
-      createPoints('/assets/textures/particles/snowflake3_t.png'),
-      createPoints('/assets/textures/particles/snowflake4_t.png'),
-      createPoints('/assets/textures/particles/snowflake5_t.png'),
-    ]);
-    result.forEach(snow=>{
-      this.scene.add(snow);
-      this.loop.register(() => {
-        const positionArray = snow.geometry.getAttribute('position');
-        for (let i = 0; i < positionArray.count; i++) {
-          let x = positionArray.getX(i) + 0.06;
-          let y = positionArray.getY(i) - 0.3;
-          if (x > 60) {
-            x -= 120;
-          }
-          if (y < -40) {
-            y += 80;
-          }
-          positionArray.setX(i, x);
-          positionArray.setY(i, y);
-        }
-        positionArray.needsUpdate = true;
-      });
-    });
-    
-    
+    // const result = await Promise.all([
+    //   createPoints('/assets/textures/particles/snowflake1_t.png'),
+    //   createPoints('/assets/textures/particles/snowflake2_t.png'),
+    //   createPoints('/assets/textures/particles/snowflake3_t.png'),
+    //   createPoints('/assets/textures/particles/snowflake4_t.png'),
+    //   createPoints('/assets/textures/particles/snowflake5_t.png'),
+    // ]);
+    // result.forEach(snow=>{
+    //   this.scene.add(snow);
+    //   this.loop.register(() => {
+    //     const positionArray = snow.geometry.getAttribute('position');
+    //     for (let i = 0; i < positionArray.count; i++) {
+    //       let x = positionArray.getX(i) + 0.06;
+    //       let y = positionArray.getY(i) - 0.3;
+    //       if (x > 60) {
+    //         x -= 120;
+    //       }
+    //       if (y < -40) {
+    //         y += 80;
+    //       }
+    //       positionArray.setX(i, x);
+    //       positionArray.setY(i, y);
+    //     }
+    //     positionArray.needsUpdate = true;
+    //   });
+    // });
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }

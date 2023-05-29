@@ -1,4 +1,4 @@
-import { Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import { Clock, Camera, Scene, WebGLRenderer } from 'three';
 
 type Updatable = {
   tick?: (delta: number) => void;
@@ -10,7 +10,7 @@ export class Loop {
   private clock: Clock;
   private tasks: Array<TaskCallback> = [];
   constructor(
-    private camera: PerspectiveCamera,
+    private camera: Camera,
     private scene: Scene,
     private renderer: WebGLRenderer,
     public updatables: Array<Updatable> = []
