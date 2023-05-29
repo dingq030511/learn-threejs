@@ -1,11 +1,12 @@
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Points, PointsMaterial, Texture, TextureLoader, Vector2, Vector3 } from 'three';
 
-export async function createPoints() {
+export async function createPoints(assertSrc: string) {
   const geom = new BufferGeometry();
 
   const array: Array<number> = [];
   const loader = new TextureLoader();
-  const texture = await loader.loadAsync('/assets/textures/particles/raindrop-3.png');
+  //  '/assets/textures/particles/raindrop-3.png'
+  const texture = await loader.loadAsync(assertSrc);
   const material = new PointsMaterial({
     size: 2,
     vertexColors: true,
@@ -14,12 +15,13 @@ export async function createPoints() {
     blending: AdditiveBlending,
     sizeAttenuation: true,
     map: texture,
+    depthWrite: false,
     color: 0xffffff,
   });
   const colorArray: Array<number> = [];
   for (let x = -15; x < 15; x++) {
     for (let y = -10; y < 10; y++) {
-      array.push(x * 4, y * 4, Math.random()* 50 * (Math.random() > 0.5 ? 1: -1));
+      array.push(x * 8 * Math.random(), y * 8 * Math.random(), Math.random()* 50 * (Math.random() > 0.5 ? 1: -1));
       colorArray.push(1, 1, 1);
     }
   }

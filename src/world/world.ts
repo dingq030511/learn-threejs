@@ -123,7 +123,7 @@ export class World {
     // const latheGeometry = new LatheGeometry(points, 100, 0, Math.PI);
     // const latheMesh = new Mesh(latheGeometry, material);
     // this.scene.add(latheMesh);
-    
+
     // const text = await createText();
     // this.scene.add(text);
     // const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
@@ -131,24 +131,52 @@ export class World {
     // this.scene.add(parametricMesh);
     // const sprites = createSprites();
     // this.scene.add(sprites);
-    const points = await createPoints();
-    this.scene.add(points);
-    this.loop.register(()=>{
-      const positionArray = points.geometry.getAttribute('position');
-      for(let i =0;i<positionArray.count;i++){
-        let x = positionArray.getX(i) + 0.06;
-        let y = positionArray.getY(i) - 0.3;
-        if(x > 60){
-          x -= 120;
+    // const points = await createPoints('/assets/textures/particles/raindrop-3.png');
+    // this.scene.add(points);
+    // this.loop.register(()=>{
+    //   const positionArray = points.geometry.getAttribute('position');
+    //   for(let i =0;i<positionArray.count;i++){
+    //     let x = positionArray.getX(i) + 0.06;
+    //     let y = positionArray.getY(i) - 0.3;
+    //     if(x > 60){
+    //       x -= 120;
+    //     }
+    //     if(y < -40){
+    //       y+=80
+    //     }
+    //     positionArray.setX(i, x);
+    //     positionArray.setY(i, y);
+    //   }
+    //   positionArray.needsUpdate = true;
+    // });
+    const result = await Promise.all([
+      createPoints('/assets/textures/particles/snowflake1_t.png'),
+      createPoints('/assets/textures/particles/snowflake2_t.png'),
+      createPoints('/assets/textures/particles/snowflake3_t.png'),
+      createPoints('/assets/textures/particles/snowflake4_t.png'),
+      createPoints('/assets/textures/particles/snowflake5_t.png'),
+    ]);
+    result.forEach(snow=>{
+      this.scene.add(snow);
+      this.loop.register(() => {
+        const positionArray = snow.geometry.getAttribute('position');
+        for (let i = 0; i < positionArray.count; i++) {
+          let x = positionArray.getX(i) + 0.06;
+          let y = positionArray.getY(i) - 0.3;
+          if (x > 60) {
+            x -= 120;
+          }
+          if (y < -40) {
+            y += 80;
+          }
+          positionArray.setX(i, x);
+          positionArray.setY(i, y);
         }
-        if(y < -40){
-          y+=80
-        }
-        positionArray.setX(i, x);
-        positionArray.setY(i, y);
-      }
-      positionArray.needsUpdate = true;
+        positionArray.needsUpdate = true;
+      });
     });
+    
+    
     this.scene.add(lensflare);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
