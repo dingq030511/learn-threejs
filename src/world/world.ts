@@ -39,6 +39,7 @@ import { createText } from '../components/text';
 import { createSprites } from '../components/sprites';
 import { createOrthoCamera } from '../components/orthoCamera';
 import { createSprite } from '../components/sprite';
+import { loadObjModel } from '../components/objModel';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -64,6 +65,7 @@ export class World {
     this.controls = createControls(this.camera, this.renderer.domElement);
     this.container.append(this.stats.dom);
     this.container.append(this.renderer.domElement);
+    const resizer = new Resizer(this.container, this.camera, this.renderer);
     this.init();
   }
 
@@ -115,11 +117,11 @@ export class World {
     lensflare.addElement(new LensflareElement(textureFlare3, 70, 1.0, flareColor));
     lensflare.position.copy(spotLight.position);
     // const gopher = await loadGopher();
-    const material = new MeshLambertMaterial({
-      color: new Color('rgb(119,119,255)'),
-      emissive: 0x2a2a2a,
-      side: DoubleSide,
-    });
+    // const material = new MeshLambertMaterial({
+    //   color: new Color('rgb(119,119,255)'),
+    //   emissive: 0x2a2a2a,
+    //   side: DoubleSide,
+    // });
     // gopher.children.forEach(e=>{
     //   if(e instanceof Mesh){
     //     e.material = material;
@@ -136,8 +138,8 @@ export class World {
     // const parametricGeometry = new ParametricGeometry(radialWave, 120, 120);
     // const parametricMesh = new Mesh(parametricGeometry, material);
     // this.scene.add(parametricMesh);
-    const sprites = createSprites();
-    this.scene.add(sprites);
+    // const sprites = createSprites();
+    // this.scene.add(sprites);
     // const points = await createPoints('/assets/textures/particles/raindrop-3.png');
     // this.scene.add(points);
     // this.loop.register(()=>{
@@ -182,8 +184,9 @@ export class World {
     //     positionArray.needsUpdate = true;
     //   });
     // });
+    const objModel = await loadObjModel();
+    this.scene.add(objModel);
     this.scene.add(lensflare);
-    const resizer = new Resizer(this.container, this.camera, this.renderer);
   }
 
   render() {
