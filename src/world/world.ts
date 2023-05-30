@@ -94,7 +94,7 @@ export class World {
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
-    // this.scene.add(ground);
+    this.scene.add(ground);
     this.scene.add(spotLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
@@ -117,7 +117,7 @@ export class World {
     lensflare.addElement(new LensflareElement(textureFlare3, 70, 0.7, flareColor));
     lensflare.addElement(new LensflareElement(textureFlare3, 120, 0.9, flareColor));
     lensflare.addElement(new LensflareElement(textureFlare3, 70, 1.0, flareColor));
-    lensflare.position.copy(spotLight.position);
+    // lensflare.position.copy(spotLight.position);
     // const gopher = await loadGopher();
     // const material = new MeshLambertMaterial({
     //   color: new Color('rgb(119,119,255)'),
@@ -192,7 +192,7 @@ export class World {
     // this.scene.add(butterfly);
     const truck = await loadTruck();
     this.scene.add(truck);
-    this.scene.add(lensflare);
+    // this.scene.add(lensflare);
   }
 
   render() {
