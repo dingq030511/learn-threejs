@@ -41,6 +41,7 @@ import { createOrthoCamera } from '../components/orthoCamera';
 import { createSprite } from '../components/sprite';
 import { loadObjModel } from '../components/objModel';
 import { createButterfly } from '../components/butterfly';
+import { loadTruck } from '../components/house';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -187,8 +188,10 @@ export class World {
     // });
     // const objModel = await loadObjModel();
     // this.scene.add(objModel);
-    const butterfly = await createButterfly();
-    this.scene.add(butterfly);
+    // const butterfly = await createButterfly();
+    // this.scene.add(butterfly);
+    const truck = await loadTruck();
+    this.scene.add(truck);
     this.scene.add(lensflare);
   }
 
