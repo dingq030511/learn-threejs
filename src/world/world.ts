@@ -40,6 +40,7 @@ import { createSprites } from '../components/sprites';
 import { createOrthoCamera } from '../components/orthoCamera';
 import { createSprite } from '../components/sprite';
 import { loadObjModel } from '../components/objModel';
+import { createButterfly } from '../components/butterfly';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -184,8 +185,10 @@ export class World {
     //     positionArray.needsUpdate = true;
     //   });
     // });
-    const objModel = await loadObjModel();
-    this.scene.add(objModel);
+    // const objModel = await loadObjModel();
+    // this.scene.add(objModel);
+    const butterfly = await createButterfly();
+    this.scene.add(butterfly);
     this.scene.add(lensflare);
   }
 
