@@ -10,10 +10,11 @@ export function createCube(cubeSize = 4) {
 }
 
 function createMaterial() {
-  const textureLoader = new TextureLoader();
-  const texture = textureLoader.load('/assets/textures/wall.jpg');
+  // const textureLoader = new TextureLoader();
+  // const texture = textureLoader.load('/assets/textures/wall.jpg');
   const material = new MeshStandardMaterial({
-    map: texture,
+    // map: texture,
+    color: 0xff0000
   });
   return material;
 }

@@ -1,5 +1,6 @@
 import {
   AdditiveBlending,
+  BufferGeometry,
   CameraHelper,
   Color,
   DoubleSide,
@@ -7,8 +8,10 @@ import {
   LatheGeometry,
   Mesh,
   MeshLambertMaterial,
+  MeshStandardMaterial,
   OrthographicCamera,
   PerspectiveCamera,
+  Raycaster,
   Scene,
   TextureLoader,
   Vector3,
@@ -73,6 +76,24 @@ export class World {
     this.init();
   }
 
+  listen(){
+    const camera = this.camera;
+    const scene = this.scene;
+    function onDocumentMouseDown(event: MouseEvent){
+      const vector = new Vector3((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
+      vector.unproject(camera);
+      const raycaster = new Raycaster(camera.position, vector.sub(camera.position).normalize());
+      const intersects = raycaster.intersectObjects(scene.children);
+      if(intersects.length > 0){
+        const mesh = intersects[0].object as Mesh<BufferGeometry, MeshStandardMaterial>;
+        mesh.material.transparent = true;
+        mesh.material.opacity = 0.6;
+        mesh.material.alphaTest = 0.1;
+      }
+    }
+    document.body.addEventListener('click', onDocumentMouseDown, false);
+  }
+
   async init() {
     const axes = createAxesHelper();
     this.scene.add(axes);
@@ -93,6 +114,7 @@ export class World {
       cube.rotation.y += params.rotationSpeed;
       cube.rotation.z += params.rotationSpeed;
     });
+    this.scene.add(cube);
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
@@ -196,9 +218,10 @@ export class World {
     // this.scene.add(truck);
     // const pdb = await loadPdb();
     // this.scene.add(pdb);
-    const carcloud = await loadCarcloud();
-    this.scene.add(carcloud);
+    // const carcloud = await loadCarcloud();
+    // this.scene.add(carcloud);
     // this.scene.add(lensflare);
+    this.listen();
   }
 
   render() {
