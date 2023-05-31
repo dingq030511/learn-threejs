@@ -47,6 +47,7 @@ import { createButterfly } from '../components/butterfly';
 import { loadTruck } from '../components/house';
 import { loadPdb } from '../components/pdb';
 import { loadCarcloud } from '../components/carcloud';
+import { loadPlanet } from '../components/planet';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -86,9 +87,9 @@ export class World {
       const intersects = raycaster.intersectObjects(scene.children);
       if(intersects.length > 0){
         const mesh = intersects[0].object as Mesh<BufferGeometry, MeshStandardMaterial>;
-        mesh.material.transparent = true;
-        mesh.material.opacity = 0.6;
-        mesh.material.alphaTest = 0.1;
+        // mesh.material.transparent = true;
+        // mesh.material.opacity = 0.6;
+        // mesh.material.alphaTest = 0.1;
       }
     }
     document.body.addEventListener('click', onDocumentMouseDown, false);
@@ -100,7 +101,7 @@ export class World {
     // const train = new Train();
     // this.loop.updatables.push(cube);
     this.loop.updatables.push(this.controls, this.stats);
-    const { spotLight, ambientLight } = createLights();
+    const { spotLight, mainLight, ambientLight } = createLights();
     const ground = createGround();
     const cube = createCube();
     const params = {
@@ -114,12 +115,12 @@ export class World {
       cube.rotation.y += params.rotationSpeed;
       cube.rotation.z += params.rotationSpeed;
     });
-    this.scene.add(cube);
+    // this.scene.add(cube);
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
     // this.scene.add(ground);
-    this.scene.add(spotLight, ambientLight);
+    this.scene.add(mainLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
     // this.orthoCamera.lookAt(new Vector3(20, 30, 0));
@@ -221,6 +222,9 @@ export class World {
     // const carcloud = await loadCarcloud();
     // this.scene.add(carcloud);
     // this.scene.add(lensflare);
+
+    const planet = await loadPlanet();
+    this.scene.add(planet);
     this.listen();
   }
 
