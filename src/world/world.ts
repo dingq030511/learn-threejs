@@ -42,6 +42,7 @@ import { createSprite } from '../components/sprite';
 import { loadObjModel } from '../components/objModel';
 import { createButterfly } from '../components/butterfly';
 import { loadTruck } from '../components/house';
+import { loadPdb } from '../components/pdb';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -94,7 +95,7 @@ export class World {
     const gui = new GUI();
     gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     gui.add(params, 'addCube');
-    this.scene.add(ground);
+    // this.scene.add(ground);
     this.scene.add(spotLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
@@ -190,8 +191,10 @@ export class World {
     // this.scene.add(objModel);
     // const butterfly = await createButterfly();
     // this.scene.add(butterfly);
-    const truck = await loadTruck();
-    this.scene.add(truck);
+    // const truck = await loadTruck();
+    // this.scene.add(truck);
+    const pdb = await loadPdb();
+    this.scene.add(pdb);
     // this.scene.add(lensflare);
   }
 
