@@ -43,6 +43,7 @@ import { loadObjModel } from '../components/objModel';
 import { createButterfly } from '../components/butterfly';
 import { loadTruck } from '../components/house';
 import { loadPdb } from '../components/pdb';
+import { loadCarcloud } from '../components/carcloud';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -193,8 +194,10 @@ export class World {
     // this.scene.add(butterfly);
     // const truck = await loadTruck();
     // this.scene.add(truck);
-    const pdb = await loadPdb();
-    this.scene.add(pdb);
+    // const pdb = await loadPdb();
+    // this.scene.add(pdb);
+    const carcloud = await loadCarcloud();
+    this.scene.add(carcloud);
     // this.scene.add(lensflare);
   }
 

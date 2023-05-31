@@ -1,6 +1,6 @@
 import { AdditiveBlending, Sprite, SpriteMaterial, TextureLoader, Vector2 } from 'three';
 
-function getTexture(){
+export function getTexture(){
   return new TextureLoader().load('/assets/textures/particles/sprite-sheet.png');
 }
 
