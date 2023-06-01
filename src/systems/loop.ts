@@ -5,7 +5,7 @@ type Updatable = {
   update?: (delta?: number) => void;
 };
 
-type TaskCallback = (delta?: number) => void
+type TaskCallback = (delta: number) => void
 export class Loop {
   private clock: Clock;
   private tasks: Array<TaskCallback> = [];

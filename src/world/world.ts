@@ -31,7 +31,7 @@ import { createStats } from '../systems/stats';
 import { createAxesHelper } from '../systems/axes-helper';
 import { createGround } from '../components/ground';
 import { createCube } from '../components/cube';
-import GUI from 'lil-gui';
+// import GUI from 'lil-gui';
 import { createSphere } from '../components/sphere';
 import { Lensflare, LensflareElement } from 'three/examples/jsm/objects/Lensflare.js';
 import { loadGopher } from '../components/gopher';
@@ -48,6 +48,9 @@ import { loadTruck } from '../components/house';
 import { loadPdb } from '../components/pdb';
 import { loadCarcloud } from '../components/carcloud';
 import { loadPlanet } from '../components/planet';
+import { loadMonster } from '../components/monster';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
+import { createTrackballControls } from '../systems/trackballControls';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -55,7 +58,8 @@ export class World {
   private scene: Scene;
   private renderer: WebGLRenderer;
   private loop: Loop;
-  private controls: OrbitControls;
+  // private controls: OrbitControls;
+  private trackballControls: TrackballControls;
   private stats: Stats;
   private container: Element;
   constructor(container: string | Element) {
@@ -70,7 +74,8 @@ export class World {
     } else {
       this.container = container;
     }
-    this.controls = createControls(this.camera, this.renderer.domElement);
+    // this.controls = createControls(this.camera, this.renderer.domElement);
+    this.trackballControls = createTrackballControls(this.camera, this.renderer.domElement);
     this.container.append(this.stats.dom);
     this.container.append(this.renderer.domElement);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
@@ -100,7 +105,7 @@ export class World {
     this.scene.add(axes);
     // const train = new Train();
     // this.loop.updatables.push(cube);
-    this.loop.updatables.push(this.controls, this.stats);
+    this.loop.updatables.push(this.stats);
     const { spotLight, mainLight, ambientLight } = createLights();
     const ground = createGround();
     const cube = createCube();
@@ -110,17 +115,20 @@ export class World {
         this.addCube();
       },
     };
+    this.loop.register(()=>{
+      this.trackballControls.update();
+    });
     this.loop.register(() => {
       cube.rotation.x += params.rotationSpeed;
       cube.rotation.y += params.rotationSpeed;
       cube.rotation.z += params.rotationSpeed;
     });
     // this.scene.add(cube);
-    const gui = new GUI();
-    gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
-    gui.add(params, 'addCube');
+    // const gui = new GUI();
+    // gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
+    // gui.add(params, 'addCube');
     // this.scene.add(ground);
-    this.scene.add(mainLight, ambientLight);
+    // this.scene.add(mainLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
     // this.orthoCamera.lookAt(new Vector3(20, 30, 0));
@@ -223,8 +231,16 @@ export class World {
     // this.scene.add(carcloud);
     // this.scene.add(lensflare);
 
-    const planet = await loadPlanet();
-    this.scene.add(planet);
+    // const planet = await loadPlanet();
+    // this.scene.add(planet);
+    const {monster, mixer, controls, clipAction} = await loadMonster();
+    this.scene.add(monster.scene);
+    this.loop.register((delta)=>{
+      mixer.update(delta);
+      controls.time = mixer.time;
+      controls.effectiveTimeScale = clipAction.getEffectiveTimeScale();
+      controls.effectiveWeight = clipAction.getEffectiveWeight();
+    });
     this.listen();
   }
 
