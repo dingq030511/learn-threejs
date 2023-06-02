@@ -52,6 +52,7 @@ import { loadMonster } from '../components/monster';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { createTrackballControls } from '../systems/trackballControls';
 import { loadCesiumMan } from '../components/cesiumMan';
+import { loadSalsa } from '../components/salsa';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -243,9 +244,14 @@ export class World {
     //   controls.effectiveTimeScale = clipAction.getEffectiveTimeScale();
     //   controls.effectiveWeight = clipAction.getEffectiveWeight();
     // });
-    const {scene, mixer} = await loadCesiumMan();
-    this.scene.add(scene)
-    this.loop.register(delta=>{
+    // const {scene, mixer} = await loadCesiumMan();
+    // this.scene.add(scene)
+    // this.loop.register(delta=>{
+    //   mixer.update(delta);
+    // });
+    const {salsa, mixer} = await loadSalsa();
+    this.scene.add(salsa);
+    this.loop.register((delta)=>{
       mixer.update(delta);
     });
     this.listen();
