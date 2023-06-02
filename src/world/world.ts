@@ -51,6 +51,7 @@ import { loadPlanet } from '../components/planet';
 import { loadMonster } from '../components/monster';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { createTrackballControls } from '../systems/trackballControls';
+import { loadCesiumMan } from '../components/cesiumMan';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -58,8 +59,8 @@ export class World {
   private scene: Scene;
   private renderer: WebGLRenderer;
   private loop: Loop;
-  // private controls: OrbitControls;
-  private trackballControls: TrackballControls;
+  private controls: OrbitControls;
+  // private trackballControls: TrackballControls;
   private stats: Stats;
   private container: Element;
   constructor(container: string | Element) {
@@ -74,8 +75,8 @@ export class World {
     } else {
       this.container = container;
     }
-    // this.controls = createControls(this.camera, this.renderer.domElement);
-    this.trackballControls = createTrackballControls(this.camera, this.renderer.domElement);
+    this.controls = createControls(this.camera, this.renderer.domElement);
+    // this.trackballControls = createTrackballControls(this.camera, this.renderer.domElement);
     this.container.append(this.stats.dom);
     this.container.append(this.renderer.domElement);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
@@ -116,7 +117,8 @@ export class World {
       },
     };
     this.loop.register(()=>{
-      this.trackballControls.update();
+      this.controls.update();
+      // this.trackballControls.update();
     });
     this.loop.register(() => {
       cube.rotation.x += params.rotationSpeed;
@@ -233,13 +235,18 @@ export class World {
 
     // const planet = await loadPlanet();
     // this.scene.add(planet);
-    const {monster, mixer, controls, clipAction} = await loadMonster();
-    this.scene.add(monster.scene);
-    this.loop.register((delta)=>{
+    // const {monster, mixer, controls, clipAction} = await loadMonster();
+    // this.scene.add(monster.scene);
+    // this.loop.register((delta)=>{
+    //   mixer.update(delta);
+    //   controls.time = mixer.time;
+    //   controls.effectiveTimeScale = clipAction.getEffectiveTimeScale();
+    //   controls.effectiveWeight = clipAction.getEffectiveWeight();
+    // });
+    const {scene, mixer} = await loadCesiumMan();
+    this.scene.add(scene)
+    this.loop.register(delta=>{
       mixer.update(delta);
-      controls.time = mixer.time;
-      controls.effectiveTimeScale = clipAction.getEffectiveTimeScale();
-      controls.effectiveWeight = clipAction.getEffectiveWeight();
     });
     this.listen();
   }

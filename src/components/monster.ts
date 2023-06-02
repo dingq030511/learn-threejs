@@ -15,7 +15,6 @@ export async function loadMonster() {
       child.material.emissiveMap = child.material.map;
     }
   })
-  console.log(monster);
   const mixer = new AnimationMixer(monster.scene);
   const _animationClip = monster.scene.animations[0];
   const clipAction = mixer.clipAction(_animationClip).play();
