@@ -53,6 +53,7 @@ import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls
 import { createTrackballControls } from '../systems/trackballControls';
 import { loadCesiumMan } from '../components/cesiumMan';
 import { loadSalsa } from '../components/salsa';
+import { createStone } from '../components/stone';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -253,8 +254,11 @@ export class World {
     // this.loop.register(delta=>{
     //   mixer.update(delta);
     // });
-    const { model } = await loadSalsa();
-    this.scene.add(model);
+    // const { model } = await loadSalsa();
+    // this.scene.add(model);
+    const cube1 = createCube();
+    const cube2 = createStone();
+    this.scene.add(cube1, cube2);
     this.listen();
   }
 

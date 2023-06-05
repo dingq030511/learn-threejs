@@ -9,12 +9,13 @@ export function createCube(cubeSize = 4) {
   return cube;
 }
 
-function createMaterial() {
-  // const textureLoader = new TextureLoader();
-  // const texture = textureLoader.load('/assets/textures/wall.jpg');
+export function createMaterial() {
+  const textureLoader = new TextureLoader();
+  const texture = textureLoader.load('/assets/textures/stone/stone.jpg');
   const material = new MeshStandardMaterial({
-    // map: texture,
-    color: 0xff0000
+    map: texture,
+    metalness: 0.2,
+    roughness: 0.07,
   });
   return material;
 }
