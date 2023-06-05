@@ -1,8 +1,8 @@
 import { AnimationMixer, BufferGeometry, Mesh, MeshPhongMaterial, MeshStandardMaterial, SkinnedMesh } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
-export async function loadSalsa(){
-  const loader = new FBXLoader()
+export async function loadSalsa() {
+  const loader = new FBXLoader();
   const model = await loader.loadAsync('/assets/models/fbx/fbxfile.fbx');
   // salsa.scale.set(0.2, 0.2, 0.2);
   // salsa.translateY(-13);
@@ -14,12 +14,13 @@ export async function loadSalsa(){
   //   }
   // });
   console.log(model);
-  model.scale.set(0.02, 0.02, 0.02)
-  model.position.set(0,0,0);
-  model.rotateX(Math.PI)
+  model.scale.set(0.02, 0.02, 0.02);
+  model.position.set(0, 0, 0);
+  model.rotateX(Math.PI);
+  model.rotateY(Math.PI);
   // const mixer = new AnimationMixer(model);
   // let animationClip = model.animations[0];
   // const clipAction = mixer.clipAction(animationClip).play();
   // animationClip = clipAction.getClip();
-  return {model: model};
+  return { model: model };
 }
