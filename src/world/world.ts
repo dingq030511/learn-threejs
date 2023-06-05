@@ -135,7 +135,7 @@ export class World {
     // gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     // gui.add(params, 'addCube');
     // this.scene.add(ground);
-    // this.scene.add(mainLight, ambientLight);
+    this.scene.add(mainLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
     // this.orthoCamera.lookAt(new Vector3(20, 30, 0));

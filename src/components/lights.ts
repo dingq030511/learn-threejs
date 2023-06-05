@@ -2,7 +2,7 @@ import { AmbientLight, DirectionalLight, HemisphereLight, SpotLight, Vector2 } f
 
 export function createLights() {
   const ambientLight = new AmbientLight('white', 0.5);
-  const mainLight = new DirectionalLight('white', 2);
+  const mainLight = new DirectionalLight('white', 1);
   const hemisphereLight = new HemisphereLight(
     0x0000ff, // bright sky color
     0x00ff00, // dim ground color

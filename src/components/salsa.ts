@@ -14,15 +14,9 @@ export async function loadSalsa(){
   //   }
   // });
   console.log(model);
-  const goodsShelf = model.children[0].children[0];
-  if(goodsShelf instanceof Mesh){
-    const material = goodsShelf.material as MeshPhongMaterial;
-    material.emissive = material.color;
-    // material.emissiveMap = material.map;
-    // console.log(goodsShelf);
-  }
-  goodsShelf.scale.set(0.02, 0.02, 0.02);
-  
+  model.scale.set(0.02, 0.02, 0.02)
+  model.position.set(0,0,0);
+  model.rotateX(Math.PI)
   // const mixer = new AnimationMixer(model);
   // let animationClip = model.animations[0];
   // const clipAction = mixer.clipAction(animationClip).play();
