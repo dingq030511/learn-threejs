@@ -84,15 +84,19 @@ export class World {
     this.init();
   }
 
-  listen(){
+  listen() {
     const camera = this.camera;
     const scene = this.scene;
-    function onDocumentMouseDown(event: MouseEvent){
-      const vector = new Vector3((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
+    function onDocumentMouseDown(event: MouseEvent) {
+      const vector = new Vector3(
+        (event.clientX / window.innerWidth) * 2 - 1,
+        -(event.clientY / window.innerHeight) * 2 + 1,
+        0.5
+      );
       vector.unproject(camera);
       const raycaster = new Raycaster(camera.position, vector.sub(camera.position).normalize());
       const intersects = raycaster.intersectObjects(scene.children);
-      if(intersects.length > 0){
+      if (intersects.length > 0) {
         const mesh = intersects[0].object as Mesh<BufferGeometry, MeshStandardMaterial>;
         // mesh.material.transparent = true;
         // mesh.material.opacity = 0.6;
@@ -117,7 +121,7 @@ export class World {
         this.addCube();
       },
     };
-    this.loop.register(()=>{
+    this.loop.register(() => {
       this.controls.update();
       // this.trackballControls.update();
     });
@@ -249,11 +253,8 @@ export class World {
     // this.loop.register(delta=>{
     //   mixer.update(delta);
     // });
-    const {salsa, mixer} = await loadSalsa();
-    this.scene.add(salsa);
-    this.loop.register((delta)=>{
-      mixer.update(delta);
-    });
+    const { model } = await loadSalsa();
+    this.scene.add(model);
     this.listen();
   }
 
