@@ -4,8 +4,8 @@ import { createCube } from './cube';
 export function createStone() {
   const stone = createCube();
   const loader = new TextureLoader();
-  const bumpMap = loader.load('/assets/textures/general/plaster-normal.jpg');
-  stone.material.bumpMap = bumpMap;
+  const normalMap = loader.load('/assets/textures/general/plaster-normal.jpg');
+  stone.material.normalMap = normalMap;
   stone.position.x = 3;
   stone.position.y = (-1 / 3) * Math.PI;
   return stone;
