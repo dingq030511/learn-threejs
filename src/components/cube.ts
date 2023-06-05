@@ -4,14 +4,15 @@ export function createCube(cubeSize = 4) {
   const geometry = new BoxGeometry(cubeSize, cubeSize, cubeSize);
   const material = createMaterial();
   const cube = new Mesh(geometry, material);
-  cube.position.set(-4, 3, 0);
+  cube.position.x = -2;
+  cube.position.y = (-1 / 3) * Math.PI;
   cube.castShadow = true;
   return cube;
 }
 
 export function createMaterial() {
   const textureLoader = new TextureLoader();
-  const texture = textureLoader.load('/assets/textures/stone/stone.jpg');
+  const texture = textureLoader.load('/assets/textures/general/plaster.jpg');
   const material = new MeshStandardMaterial({
     map: texture,
     metalness: 0.2,

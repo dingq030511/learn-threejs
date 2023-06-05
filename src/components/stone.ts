@@ -4,7 +4,7 @@ import { createCube } from './cube';
 export function createStone() {
   const stone = createCube();
   const loader = new TextureLoader();
-  const bumpMap = loader.load('/assets/textures/stone/stone-bump.jpg');
+  const bumpMap = loader.load('/assets/textures/general/plaster-normal.jpg');
   stone.material.bumpMap = bumpMap;
   stone.position.x = 3;
   stone.position.y = (-1 / 3) * Math.PI;
