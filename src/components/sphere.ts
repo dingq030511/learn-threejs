@@ -1,4 +1,4 @@
-import { Mesh, MeshPhongMaterial, SphereGeometry, TextureLoader } from 'three';
+import { Mesh, MeshPhongMaterial, MeshStandardMaterial, SphereGeometry, TextureLoader } from 'three';
 
 export function createSphere() {
   const sphereGeo = new SphereGeometry(4, 25, 25);
@@ -13,7 +13,7 @@ export function createSphere() {
 export function createSphereMaterial(){
   const loader = new TextureLoader();
   const texture = loader.load('/assets/textures/w_c.jpg');
-  return new MeshPhongMaterial({
-    map: texture
+  return new MeshStandardMaterial({
+    map: texture,
   });
 }

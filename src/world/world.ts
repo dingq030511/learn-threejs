@@ -55,6 +55,8 @@ import { loadCesiumMan } from '../components/cesiumMan';
 import { loadSalsa } from '../components/salsa';
 import { createStone } from '../components/stone';
 import { createDisplacementSphere } from '../components/displacementMap';
+import { createAlphaMapSphere } from '../components/alphaMap';
+import { createEmissiveMapSphere } from '../components/emissiveMap';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -260,7 +262,8 @@ export class World {
     // const cube1 = createCube();
     // const cube2 = createStone();
     // this.scene.add(cube1, cube2);
-    const sphere2 = createDisplacementSphere();
+    // const sphere2 = createDisplacementSphere();
+    const sphere2 = createEmissiveMapSphere();
     this.scene.add(sphere, sphere2);
     this.listen();
   }
