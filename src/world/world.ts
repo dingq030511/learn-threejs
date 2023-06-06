@@ -3,6 +3,7 @@ import {
   BufferGeometry,
   CameraHelper,
   Color,
+  CubeTextureLoader,
   DoubleSide,
   Fog,
   LatheGeometry,
@@ -266,6 +267,7 @@ export class World {
     // const sphere2 = createDisplacementSphere();
     // const sphere2 = createEmissiveMapSphere();
     // this.scene.add(sphere, sphere2);
+    this.loadBackground();
     const earth = await createEarth();
     this.scene.add(earth);
     this.listen();
@@ -273,6 +275,20 @@ export class World {
 
   render() {
     this.renderer.render(this.scene, this.camera);
+  }
+
+  async loadBackground(){
+    const urls = [
+      '/assets/textures/cubemap/flowers/right.png',
+      '/assets/textures/cubemap/flowers/left.png',
+      '/assets/textures/cubemap/flowers/top.png',
+      '/assets/textures/cubemap/flowers/bottom.png',
+      '/assets/textures/cubemap/flowers/front.png',
+      '/assets/textures/cubemap/flowers/back.png',
+    ];
+    const cubeLoader = new CubeTextureLoader();
+    const background = await cubeLoader.loadAsync(urls);
+    this.scene.background = background;
   }
 
   addCube() {
