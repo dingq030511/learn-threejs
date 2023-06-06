@@ -57,6 +57,7 @@ import { createStone } from '../components/stone';
 import { createDisplacementSphere } from '../components/displacementMap';
 import { createAlphaMapSphere } from '../components/alphaMap';
 import { createEmissiveMapSphere } from '../components/emissiveMap';
+import { createEarth } from '../components/earth';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -263,8 +264,10 @@ export class World {
     // const cube2 = createStone();
     // this.scene.add(cube1, cube2);
     // const sphere2 = createDisplacementSphere();
-    const sphere2 = createEmissiveMapSphere();
-    this.scene.add(sphere, sphere2);
+    // const sphere2 = createEmissiveMapSphere();
+    // this.scene.add(sphere, sphere2);
+    const earth = await createEarth();
+    this.scene.add(earth);
     this.listen();
   }
 
