@@ -265,7 +265,7 @@ export class World {
     // shalf2.scale.set(0.01,0.01,0.01)
     const shalf3 = await loadShalf('3dxy1.com.fbx');
     shalf3.position.set(0, 0, 0);
-    shalf3.scale.set(0.02, 0.02, 0.02)
+    shalf3.scale.set(0.01, 0.01, 0.01)
     const shalf4 = shalf3.clone();
     const shalf5 = shalf3.clone();
     shalf4.position.set(0, 0, 5);
@@ -307,10 +307,12 @@ export class World {
           child.material = child.userData.originMaterial;
           return;
         }
-        child.material = child.material.clone();
-        child.material.color = new Color('red');
+        // child.material = child.material.clone();
+        // child.material.color = new Color('red');
       }
     })
+    shalf.scale.set(2, 2, 2);
+    shalf.rotateZ(-Math.PI / 3)
   }
 
   render() {
