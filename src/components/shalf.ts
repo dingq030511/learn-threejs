@@ -5,6 +5,5 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
   loader.setPath('/assets/models/fbx/');
 export async function loadShalf(src: string){
   const model = await loader.loadAsync(src);
-  console.log(model);
   return model;
 }

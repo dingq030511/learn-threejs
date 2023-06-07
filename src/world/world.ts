@@ -6,10 +6,12 @@ import {
   CubeTextureLoader,
   DoubleSide,
   Fog,
+  Group,
   LatheGeometry,
   Mesh,
   MeshLambertMaterial,
   MeshStandardMaterial,
+  Object3D,
   OrthographicCamera,
   PerspectiveCamera,
   Raycaster,
@@ -61,6 +63,7 @@ import { createEmissiveMapSphere } from '../components/emissiveMap';
 import { createEarth } from '../components/earth';
 import { createVideoCube } from '../components/videoCube';
 import { loadShalf } from '../components/shalf';
+import { ListenerHelper } from '../systems/listenerHelper';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -71,8 +74,9 @@ export class World {
   private controls: OrbitControls;
   // private trackballControls: TrackballControls;
   private stats: Stats;
-  private container: Element;
-  constructor(container: string | Element) {
+  private container: HTMLElement;
+  private listenerHelper: ListenerHelper;
+  constructor(container: string | HTMLElement) {
     this.camera = createCamera();
     this.orthoCamera = createOrthoCamera();
     this.scene = createScene();
@@ -85,33 +89,12 @@ export class World {
       this.container = container;
     }
     this.controls = createControls(this.camera, this.renderer.domElement);
+    this.listenerHelper = new ListenerHelper(this.container, this.camera, this.scene);
     // this.trackballControls = createTrackballControls(this.camera, this.renderer.domElement);
     this.container.append(this.stats.dom);
     this.container.append(this.renderer.domElement);
     const resizer = new Resizer(this.container, this.camera, this.renderer);
     this.init();
-  }
-
-  listen() {
-    const camera = this.camera;
-    const scene = this.scene;
-    function onDocumentMouseDown(event: MouseEvent) {
-      const vector = new Vector3(
-        (event.clientX / window.innerWidth) * 2 - 1,
-        -(event.clientY / window.innerHeight) * 2 + 1,
-        0.5
-      );
-      vector.unproject(camera);
-      const raycaster = new Raycaster(camera.position, vector.sub(camera.position).normalize());
-      const intersects = raycaster.intersectObjects(scene.children);
-      if (intersects.length > 0) {
-        const mesh = intersects[0].object as Mesh<BufferGeometry, MeshStandardMaterial>;
-        // mesh.material.transparent = true;
-        // mesh.material.opacity = 0.6;
-        // mesh.material.alphaTest = 0.1;
-      }
-    }
-    document.body.addEventListener('click', onDocumentMouseDown, false);
   }
 
   async init() {
@@ -142,7 +125,7 @@ export class World {
     // const gui = new GUI();
     // gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     // gui.add(params, 'addCube');
-    // this.scene.add(ground);
+    this.scene.add(ground);
     this.scene.add(mainLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
@@ -269,7 +252,7 @@ export class World {
     // const sphere2 = createDisplacementSphere();
     // const sphere2 = createEmissiveMapSphere();
     // this.scene.add(sphere, sphere2);
-    this.loadBackground();
+    // this.loadBackground();
     // const earth = await createEarth();
     // this.scene.add(earth);
     // const videoCube = await createVideoCube();
@@ -277,14 +260,57 @@ export class World {
     // const shalf1 = await loadShalf('superMarketshalf.fbx');
     // shalf1.position.x = -20
     // shalf1.scale.set(0.2,0.2,0.2)
-    const shalf2 = await loadShalf('3dxy.com.fbx');
-    shalf2.position.set(5, 0, 0);
-    shalf2.scale.set(0.01,0.01,0.01)
-    // const shalf3 = await loadShalf('3dxy1.com.fbx');
-    // shalf3.position.set(30, 0, 0);
-    // shalf3.scale.set(0.01, 0.01, 0.01)
-    this.scene.add(shalf2);
-    this.listen();
+    // const shalf2 = await loadShalf('3dxy.com.fbx');
+    // shalf2.position.set(5, 0, 0);
+    // shalf2.scale.set(0.01,0.01,0.01)
+    const shalf3 = await loadShalf('3dxy1.com.fbx');
+    shalf3.position.set(0, 0, 0);
+    shalf3.scale.set(0.02, 0.02, 0.02)
+    const shalf4 = shalf3.clone();
+    const shalf5 = shalf3.clone();
+    shalf4.position.set(0, 0, 5);
+    shalf5.position.set(0, 0, 10);
+    this.scene.add(shalf3,shalf4, shalf5);
+    this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
+    this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
+    this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
+    this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
+    this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
+    this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
+  }
+
+  shalfClickHandler(mesh: Object3D){
+    const shalf = mesh.children[1];
+    shalf.children.forEach(child=>{
+      if(child instanceof Mesh){
+        if(!child.userData.originMaterial) {
+          child.userData.originMaterial = child.material;
+        }
+        if(child.userData.originMaterial !== child.material){
+          child.material = child.userData.originMaterial;
+          return;
+        }
+        child.material = child.material.clone();
+        child.material.color = new Color('lightgreen');
+      }
+    })
+  }
+
+  shalfDblclickHandler(mesh: Object3D){
+    const shalf = mesh.children[1];
+    shalf.children.forEach(child=>{
+      if(child instanceof Mesh){
+        if(!child.userData.originMaterial) {
+          child.userData.originMaterial = child.material;
+        }
+        if(child.userData.originMaterial !== child.material){
+          child.material = child.userData.originMaterial;
+          return;
+        }
+        child.material = child.material.clone();
+        child.material.color = new Color('red');
+      }
+    })
   }
 
   render() {

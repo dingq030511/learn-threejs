@@ -9,6 +9,6 @@ export function createCamera() {
   );
 
   // move the camera back so we can view the scene
-  camera.position.set(-30, 40, 30);
+  camera.position.set(-50, 40, 30);
   return camera;
 }
