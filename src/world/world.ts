@@ -60,6 +60,7 @@ import { createAlphaMapSphere } from '../components/alphaMap';
 import { createEmissiveMapSphere } from '../components/emissiveMap';
 import { createEarth } from '../components/earth';
 import { createVideoCube } from '../components/videoCube';
+import { loadShalf } from '../components/shalf';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -271,8 +272,18 @@ export class World {
     this.loadBackground();
     // const earth = await createEarth();
     // this.scene.add(earth);
-    const videoCube = await createVideoCube();
-    this.scene.add(videoCube);
+    // const videoCube = await createVideoCube();
+    // this.scene.add(videoCube);
+    // const shalf1 = await loadShalf('superMarketshalf.fbx');
+    // shalf1.position.x = -20
+    // shalf1.scale.set(0.2,0.2,0.2)
+    const shalf2 = await loadShalf('3dxy.com.fbx');
+    shalf2.position.set(5, 0, 0);
+    shalf2.scale.set(0.01,0.01,0.01)
+    // const shalf3 = await loadShalf('3dxy1.com.fbx');
+    // shalf3.position.set(30, 0, 0);
+    // shalf3.scale.set(0.01, 0.01, 0.01)
+    this.scene.add(shalf2);
     this.listen();
   }
 

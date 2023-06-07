@@ -6,6 +6,7 @@ export async function createVideoCube(){
   const video = document.createElement('video');
   video.autoplay = true;
   video.src = '/assets/movies/Big_Buck_Bunny_small.ogv'
+  video.loop = true;
   video.addEventListener('canplaythrough', () => { // 添加视频加载完成后的监听事件
     const texture = new VideoTexture(video);
     texture.minFilter = LinearFilter;
