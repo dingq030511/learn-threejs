@@ -311,8 +311,18 @@ export class World {
         // child.material.color = new Color('red');
       }
     })
-    shalf.scale.set(2, 2, 2);
-    shalf.rotateZ(-Math.PI / 3)
+    if(!mesh.userData.originPosition){ 
+      mesh.userData.originPosition = mesh.position.clone();
+    }
+    if(!mesh.position.equals(mesh.userData.originPosition)) {
+      mesh.position.copy(mesh.userData.originPosition);
+      mesh.rotateY(Math.PI / 3)
+      return;
+    }
+    
+    mesh.position.x -= 20;
+    // mesh.scale.set(0.015, 0.015, 0.015);
+    mesh.rotateY(-Math.PI / 3)
   }
 
   render() {
