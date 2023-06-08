@@ -44,8 +44,8 @@ export class ListenerHelper {
 
   mouseEventHandler = (event: MouseEvent) => {
     const vector = new Vector3(
-      (event.clientX / window.innerWidth) * 2 - 1,
-      -(event.clientY / window.innerHeight) * 2 + 1,
+      (event.clientX / this.container.clientWidth) * 2 - 1,
+      -(event.clientY / this.container.clientHeight) * 2 + 1,
       0.5
     );
     vector.unproject(this.camera);

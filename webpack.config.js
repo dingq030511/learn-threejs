@@ -1,7 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-
+const { VueLoaderPlugin } = require('vue-loader');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+/**
+ * @type {import('webpack').Configuration}
+ */
 module.exports = {
   mode: 'development',
   entry: path.join(__dirname, 'src', 'index.ts'),
@@ -12,18 +16,30 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        use: [
+          'vue-loader'
+        ]
+      },
+      {
         test: /\.css$/,
-        use: ['style-loader','css-loader']
+        use: ['style-loader','vue-style-loader','css-loader']
       },
       {
         test: /\.tsx?$/, // .ts或者tsx后缀的文件，就是typescript文件
-        use: 'ts-loader', // 就是上面安装的ts-loader
+        loader: 'ts-loader', // 就是上面安装的ts-loader
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        },
         exclude: '/node-modules/', // 排除node-modules目录
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts']
+    extensions: ['.js', '.ts'],
+    // alias: {
+    //   '@': 'src'
+    // }
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -37,6 +53,8 @@ module.exports = {
           to: 'assets'
         }
       ]
-    })
+    }),
+    new VueLoaderPlugin(),
+    new CleanWebpackPlugin()
   ],
 };
