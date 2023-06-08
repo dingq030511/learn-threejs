@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
   import { onMounted } from 'vue';
-  import { World } from '../world/index';
+  import { World } from '../world';
 
   onMounted(async () => {
     const world = new World('#container');
@@ -13,7 +13,7 @@
   });
 </script>
 
-<style>
+<style scoped>
   #container {
     width: 100%;
     height: 100%;

@@ -64,6 +64,9 @@ import { createEarth } from '../components/earth';
 import { createVideoCube } from '../components/videoCube';
 import { loadShalf } from '../components/shalf';
 import { ListenerHelper } from '../systems/listenerHelper';
+import { Modal, message } from 'ant-design-vue';
+import ShalfDetail from '../views/components/ShalfDetail.vue'
+import { createVNode } from 'vue';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -297,6 +300,11 @@ export class World {
   }
 
   shalfDblclickHandler(mesh: Object3D){
+    console.log(ShalfDetail);
+    Modal.success({
+      title: '测试',
+      content: createVNode(ShalfDetail)
+    })
     const shalf = mesh.children[1];
     shalf.children.forEach(child=>{
       if(child instanceof Mesh){

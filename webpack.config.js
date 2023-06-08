@@ -37,9 +37,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts'],
-    // alias: {
-    //   '@': 'src'
-    // }
   },
   plugins: [
     new HtmlWebpackPlugin({
