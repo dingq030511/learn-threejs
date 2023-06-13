@@ -13,11 +13,10 @@ export async function loadSalsa() {
   //     material.emissiveMap = material.map;
   //   }
   // });
-  console.log(model);
   model.scale.set(0.02, 0.02, 0.02);
   model.position.set(0, 0, 0);
-  model.rotateX(Math.PI);
-  model.rotateY(Math.PI);
+  // model.rotateX(Math.PI);
+  // model.rotateY(Math.PI);
   // const mixer = new AnimationMixer(model);
   // let animationClip = model.animations[0];
   // const clipAction = mixer.clipAction(animationClip).play();

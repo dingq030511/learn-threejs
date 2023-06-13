@@ -124,7 +124,7 @@ export class World {
     //   cube.rotation.y += params.rotationSpeed;
     //   cube.rotation.z += params.rotationSpeed;
     // });
-    this.scene.add(cube);
+    // this.scene.add(cube);
     // const gui = new GUI();
     // gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     // gui.add(params, 'addCube');
@@ -247,8 +247,8 @@ export class World {
     // this.loop.register(delta=>{
     //   mixer.update(delta);
     // });
-    // const { model } = await loadSalsa();
-    // this.scene.add(model);
+    const { model: shalf3 } = await loadSalsa();
+    this.scene.add(shalf3);
     // const cube1 = createCube();
     // const cube2 = createStone();
     // this.scene.add(cube1, cube2);
@@ -269,66 +269,68 @@ export class World {
     // const shalf3 = await loadShalf('3dxy1.com.fbx');
     // shalf3.position.set(0, 0, 0);
     // shalf3.scale.set(0.01, 0.01, 0.01)
-    // const shalf4 = shalf3.clone();
-    // const shalf5 = shalf3.clone();
-    // shalf4.position.set(0, 0, 5);
-    // shalf5.position.set(0, 0, 10);
-    // this.scene.add(shalf3,shalf4, shalf5);
-    // this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
-    // this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
-    // this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
-    // this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
-    // this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
-    // this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
-    this.listenerHelper.listen(cube, 'dblclick', this.cubeDblClickHandler);
+    const shalf4 = shalf3.clone();
+    const shalf5 = shalf3.clone();
+    shalf4.position.set(0, 0, 5);
+    shalf5.position.set(0, 0, 10);
+    this.scene.add(shalf3,shalf4, shalf5);
+    this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
+    this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
+    this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
+    this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
+    this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
+    this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
+    // this.listenerHelper.listen(cube, 'dblclick', this.cubeDblClickHandler);
   }
 
   shalfClickHandler(mesh: Object3D){
-    const shalf = mesh.children[1];
-    shalf.children.forEach(child=>{
-      if(child instanceof Mesh){
-        if(!child.userData.originMaterial) {
-          child.userData.originMaterial = child.material;
-        }
-        if(child.userData.originMaterial !== child.material){
-          child.material = child.userData.originMaterial;
-          return;
-        }
-        child.material = child.material.clone();
-        child.material.color = new Color('lightgreen');
-      }
-    })
+    // const shalf = mesh.children[1];
+    // shalf.children.forEach(child=>{
+    //   if(child instanceof Mesh){
+    //     if(!child.userData.originMaterial) {
+    //       child.userData.originMaterial = child.material;
+    //     }
+    //     if(child.userData.originMaterial !== child.material){
+    //       child.material = child.userData.originMaterial;
+    //       return;
+    //     }
+    //     child.material = child.material.clone();
+    //     child.material.color = new Color('lightgreen');
+    //   }
+    // })
   }
 
   shalfDblclickHandler(mesh: Object3D){
-    console.log(ShalfDetail);
-    
-    const shalf = mesh.children[1];
-    shalf.children.forEach(child=>{
-      if(child instanceof Mesh){
-        if(!child.userData.originMaterial) {
-          child.userData.originMaterial = child.material;
-        }
-        if(child.userData.originMaterial !== child.material){
-          child.material = child.userData.originMaterial;
-          return;
-        }
-        // child.material = child.material.clone();
-        // child.material.color = new Color('red');
-      }
+    // const shalf = mesh.children[1];
+    // shalf.children.forEach(child=>{
+    //   if(child instanceof Mesh){
+    //     if(!child.userData.originMaterial) {
+    //       child.userData.originMaterial = child.material;
+    //     }
+    //     if(child.userData.originMaterial !== child.material){
+    //       child.material = child.userData.originMaterial;
+    //       return;
+    //     }
+    //     // child.material = child.material.clone();
+    //     // child.material.color = new Color('red');
+    //   }
+    // })
+    // if(!mesh.userData.originPosition){ 
+    //   mesh.userData.originPosition = mesh.position.clone();
+    // }
+    // if(!mesh.position.equals(mesh.userData.originPosition)) {
+    //   mesh.position.copy(mesh.userData.originPosition);
+    //   mesh.rotateY(Math.PI / 3)
+    //   return;
+    // }
+    Modal.success({
+      title: '货架详情',
+      icon: null,
+      content: createVNode(ShalfDetail, {
+        model: mesh
+      }),
+      width: 800,
     })
-    if(!mesh.userData.originPosition){ 
-      mesh.userData.originPosition = mesh.position.clone();
-    }
-    if(!mesh.position.equals(mesh.userData.originPosition)) {
-      mesh.position.copy(mesh.userData.originPosition);
-      mesh.rotateY(Math.PI / 3)
-      return;
-    }
-    
-    mesh.position.x -= 20;
-    // mesh.scale.set(0.015, 0.015, 0.015);
-    mesh.rotateY(-Math.PI / 3)
   }
 
   cubeDblClickHandler = (mesh: Object3D)=>{
