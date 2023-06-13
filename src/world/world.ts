@@ -119,16 +119,16 @@ export class World {
       this.controls.update();
       // this.trackballControls.update();
     });
-    this.loop.register(() => {
-      cube.rotation.x += params.rotationSpeed;
-      cube.rotation.y += params.rotationSpeed;
-      cube.rotation.z += params.rotationSpeed;
-    });
-    // this.scene.add(cube);
+    // this.loop.register(() => {
+    //   cube.rotation.x += params.rotationSpeed;
+    //   cube.rotation.y += params.rotationSpeed;
+    //   cube.rotation.z += params.rotationSpeed;
+    // });
+    this.scene.add(cube);
     // const gui = new GUI();
     // gui.add(params, 'rotationSpeed', 0, 0.5).step(0.01);
     // gui.add(params, 'addCube');
-    this.scene.add(ground);
+    // this.scene.add(ground);
     this.scene.add(mainLight, ambientLight);
     // this.scene.fog = new Fog(0xffffff, 0.015, 100);
     this.camera.lookAt(this.scene.position);
@@ -266,20 +266,21 @@ export class World {
     // const shalf2 = await loadShalf('3dxy.com.fbx');
     // shalf2.position.set(5, 0, 0);
     // shalf2.scale.set(0.01,0.01,0.01)
-    const shalf3 = await loadShalf('3dxy1.com.fbx');
-    shalf3.position.set(0, 0, 0);
-    shalf3.scale.set(0.01, 0.01, 0.01)
-    const shalf4 = shalf3.clone();
-    const shalf5 = shalf3.clone();
-    shalf4.position.set(0, 0, 5);
-    shalf5.position.set(0, 0, 10);
-    this.scene.add(shalf3,shalf4, shalf5);
-    this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
-    this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
-    this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
-    this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
-    this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
-    this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
+    // const shalf3 = await loadShalf('3dxy1.com.fbx');
+    // shalf3.position.set(0, 0, 0);
+    // shalf3.scale.set(0.01, 0.01, 0.01)
+    // const shalf4 = shalf3.clone();
+    // const shalf5 = shalf3.clone();
+    // shalf4.position.set(0, 0, 5);
+    // shalf5.position.set(0, 0, 10);
+    // this.scene.add(shalf3,shalf4, shalf5);
+    // this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
+    // this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
+    // this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
+    // this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
+    // this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
+    // this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
+    this.listenerHelper.listen(cube, 'dblclick', this.cubeDblClickHandler);
   }
 
   shalfClickHandler(mesh: Object3D){
@@ -301,10 +302,7 @@ export class World {
 
   shalfDblclickHandler(mesh: Object3D){
     console.log(ShalfDetail);
-    Modal.success({
-      title: '测试',
-      content: createVNode(ShalfDetail)
-    })
+    
     const shalf = mesh.children[1];
     shalf.children.forEach(child=>{
       if(child instanceof Mesh){
@@ -331,6 +329,16 @@ export class World {
     mesh.position.x -= 20;
     // mesh.scale.set(0.015, 0.015, 0.015);
     mesh.rotateY(-Math.PI / 3)
+  }
+
+  cubeDblClickHandler = (mesh: Object3D)=>{
+    Modal.success({
+      icon: null,
+      content: createVNode(ShalfDetail, {
+        model: mesh
+      }),
+      width: 800,
+    })
   }
 
   render() {

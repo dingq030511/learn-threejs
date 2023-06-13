@@ -4,8 +4,8 @@ export function createCube(cubeSize = 4) {
   const geometry = new BoxGeometry(cubeSize, cubeSize, cubeSize);
   const material = createMaterial();
   const cube = new Mesh(geometry, material);
-  cube.position.x = -2;
-  cube.position.y = (-1 / 3) * Math.PI;
+  cube.position.x = 0;
+  cube.position.y = 0;
   cube.castShadow = true;
   return cube;
 }
