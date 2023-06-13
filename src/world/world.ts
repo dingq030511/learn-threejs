@@ -333,6 +333,7 @@ export class World {
 
   cubeDblClickHandler = (mesh: Object3D)=>{
     Modal.success({
+      title: '货架详情',
       icon: null,
       content: createVNode(ShalfDetail, {
         model: mesh
