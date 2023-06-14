@@ -9,6 +9,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: path.join(__dirname, 'src', 'index.ts'),
+  output: {
+    path: path.join(__dirname, 'docs'),
+    filename: '[name].[hash].js',
+  },
   devServer: {
     port: '8080',
     open: true,
