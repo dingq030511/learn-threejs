@@ -64,13 +64,13 @@ function rotateAnimate(clock: Clock = new Clock(), total = 0) {
   if (total < Math.PI) {
     requestAnimationFrame(() => {
       const delta = clock.getDelta() * 1000;
+      console.log(delta);
       let angle = (delta / 300) * Math.PI;
       total += angle;
       if(total > Math.PI){
         angle = Math.PI - (total - angle);
       }
       shalf.rotation.z += angle;
-      console.log(shalf.rotation.z);
       renderer.render(scene, camera);
       rotateAnimate(clock, total);
     });

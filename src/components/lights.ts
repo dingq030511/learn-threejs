@@ -8,7 +8,7 @@ export function createLights() {
     0x00ff00, // dim ground color
     0.6
   );
-  mainLight.position.set(10, 10, 10);
+  mainLight.position.set(-20, 10, -10);
   const spotLight = new SpotLight(0xffffff, 1);
   spotLight.position.set(-40, 40, -15);
   spotLight.castShadow = true;
