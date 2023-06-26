@@ -67,6 +67,7 @@ import { ListenerHelper } from '../systems/listenerHelper';
 import { Modal, message } from 'ant-design-vue';
 import ShalfDetail from '../views/components/ShalfDetail.vue'
 import { createVNode } from 'vue';
+import { loadLiquidNitrogenCanister } from '../components/liquidNitrogenCanister';
 
 export class World {
   private camera: PerspectiveCamera;
@@ -247,8 +248,8 @@ export class World {
     // this.loop.register(delta=>{
     //   mixer.update(delta);
     // });
-    const { model: shalf3 } = await loadSalsa();
-    this.scene.add(shalf3);
+    // const { model: shalf3 } = await loadSalsa();
+    // this.scene.add(shalf3);
     // const cube1 = createCube();
     // const cube2 = createStone();
     // this.scene.add(cube1, cube2);
@@ -269,18 +270,23 @@ export class World {
     // const shalf3 = await loadShalf('3dxy1.com.fbx');
     // shalf3.position.set(0, 0, 0);
     // shalf3.scale.set(0.01, 0.01, 0.01)
-    const shalf4 = shalf3.clone();
-    const shalf5 = shalf3.clone();
-    shalf4.position.set(0, 0, 5);
-    shalf5.position.set(0, 0, 10);
-    this.scene.add(shalf3,shalf4, shalf5);
-    this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
-    this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
-    this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
-    this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
-    this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
-    this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
+    // const shalf4 = shalf3.clone();
+    // const shalf5 = shalf3.clone();
+    // shalf4.position.set(0, 0, 5);
+    // shalf5.position.set(0, 0, 10);
+    // this.scene.add(shalf3,shalf4, shalf5);
+    // this.listenerHelper.listen(shalf3, 'click', this.shalfClickHandler)
+    // this.listenerHelper.listen(shalf4, 'click', this.shalfClickHandler)
+    // this.listenerHelper.listen(shalf5, 'click', this.shalfClickHandler)
+    // this.listenerHelper.listen(shalf3, 'dblclick', this.shalfDblclickHandler)
+    // this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
+    // this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
     // this.listenerHelper.listen(cube, 'dblclick', this.cubeDblClickHandler);
+
+    const canisterModel = await loadLiquidNitrogenCanister();
+    const canister = canisterModel.scene;
+    canister.scale.set(6, 6, 6)
+    this.scene.add(canister);
   }
 
   shalfClickHandler(mesh: Object3D){
