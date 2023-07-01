@@ -12,7 +12,7 @@ export function createCube(cubeSize = 4) {
 
 export function createMaterial() {
   const textureLoader = new TextureLoader();
-  const texture = textureLoader.load('/assets/textures/general/plaster.jpg');
+  const texture = textureLoader.load(process.env.PUBLIC_PATH + 'assets/textures/general/plaster.jpg');
   const material = new MeshStandardMaterial({
     map: texture,
     metalness: 0.2,

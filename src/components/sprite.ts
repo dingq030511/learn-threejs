@@ -1,7 +1,7 @@
 import { AdditiveBlending, Sprite, SpriteMaterial, TextureLoader, Vector2 } from 'three';
 
 export function getTexture(){
-  return new TextureLoader().load('/assets/textures/particles/sprite-sheet.png');
+  return new TextureLoader().load(process.env.PUBLIC_PATH + 'assets/textures/particles/sprite-sheet.png');
 }
 
 export function createSprite(size: number, transparent: boolean, opacity: number, color: number, spriteNumber: number, range: number){

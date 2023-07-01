@@ -5,7 +5,7 @@ export async function createPoints(assertSrc: string) {
 
   const array: Array<number> = [];
   const loader = new TextureLoader();
-  //  '/assets/textures/particles/raindrop-3.png'
+  //  process.env.PUBLIC_PATH + 'assets/textures/particles/raindrop-3.png'
   const texture = await loader.loadAsync(assertSrc);
   const material = new PointsMaterial({
     size: 2,

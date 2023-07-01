@@ -4,7 +4,7 @@ import { createSphere } from './sphere';
 export function createAlphaMapSphere() {
   const sphere = createSphere();
   const loader = new TextureLoader();
-  const alphaMap = loader.load('/assets/textures/alpha/partial-transparency.png');
+  const alphaMap = loader.load(process.env.PUBLIC_PATH + 'assets/textures/alpha/partial-transparency.png');
   sphere.material.alphaMap = alphaMap;
   // sphere.material.envMap = al
   sphere.material.metalness = 0.02;

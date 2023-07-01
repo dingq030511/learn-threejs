@@ -4,9 +4,9 @@ export async function createEarth(){
   const sphereGeo = new SphereGeometry(4, 25, 25);
   const textureLoader = new TextureLoader();
   const [texture,normalEarth, earthSpec] = await Promise.all([
-    textureLoader.loadAsync('/assets/textures/earth/Earth.png'),
-    textureLoader.loadAsync('/assets/textures/earth/EarthNormal.png'),
-    textureLoader.loadAsync('/assets/textures/earth/EarthSpec.png'),
+    textureLoader.loadAsync(process.env.PUBLIC_PATH + 'assets/textures/earth/Earth.png'),
+    textureLoader.loadAsync(process.env.PUBLIC_PATH + 'assets/textures/earth/EarthNormal.png'),
+    textureLoader.loadAsync(process.env.PUBLIC_PATH + 'assets/textures/earth/EarthSpec.png'),
   ]);
   const sphereMaterial = new MeshPhongMaterial({
     map: texture,

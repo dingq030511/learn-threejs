@@ -3,7 +3,7 @@ import { PDBLoader } from 'three/examples/jsm/loaders/PDBLoader.js';
 
 export async function loadPdb() {
   const loader = new PDBLoader();
-  const pdbModel = await loader.loadAsync('/assets/models/molecules/aspirin.pdb');
+  const pdbModel = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/molecules/aspirin.pdb');
   const geometryAtoms = pdbModel.geometryAtoms;
   const group = new Group();
   for (let i = 0; i < geometryAtoms.attributes.position.count; i++) {

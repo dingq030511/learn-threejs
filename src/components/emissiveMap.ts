@@ -6,12 +6,12 @@ export function createEmissiveMapSphere() {
   sphere.material.map = null;
   sphere.material.color = new Color(0x333333);
   const loader = new TextureLoader();
-  const emissiveMap = loader.load('/assets/textures/emissive/lava.png');
+  const emissiveMap = loader.load(process.env.PUBLIC_PATH + 'assets/textures/emissive/lava.png');
   sphere.material.emissiveMap = emissiveMap;
   sphere.material.emissive = new Color(0xffffff);
-  const normalMap = loader.load('/assets/textures/emissive/lava-normals.png');
+  const normalMap = loader.load(process.env.PUBLIC_PATH + 'assets/textures/emissive/lava-normals.png');
   sphere.material.normalMap = normalMap;
-  const metalnessMap = loader.load('/assets/textures/emissive/lava-smoothness.png');
+  const metalnessMap = loader.load(process.env.PUBLIC_PATH + 'assets/textures/emissive/lava-smoothness.png');
   sphere.material.metalnessMap = metalnessMap;
   sphere.material.metalness = 1;
   sphere.material.roughness = 0.4;

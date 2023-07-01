@@ -3,7 +3,7 @@ import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader.js';
 
 export async function loadTruck() {
   const loader = new ColladaLoader();
-  const model = await loader.loadAsync('/assets/models/medieval/Medieval_building.DAE');
+  const model = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/medieval/Medieval_building.DAE');
   const scene = model.scene;
   scene.children.forEach(child => {
     if (child instanceof Mesh) {

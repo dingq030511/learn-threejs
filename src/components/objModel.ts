@@ -3,7 +3,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 export async function loadObjModel() {
   const loader = new OBJLoader();
-  const obj = await loader.loadAsync('/assets/models/pinecone/pinecone.obj');
+  const obj = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/pinecone/pinecone.obj');
   const material = new MeshLambertMaterial({
     color: 0x5C3A21
   });

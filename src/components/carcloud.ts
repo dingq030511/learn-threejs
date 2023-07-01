@@ -13,7 +13,7 @@ export async function loadCarcloud(){
     depthWrite: false,
     map: getTexture()
   });
-  const geometry = await loader.loadAsync('/assets/models/carcloud/carcloud.ply');
+  const geometry = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/carcloud/carcloud.ply');
 
   return new Points(geometry, material)
 }

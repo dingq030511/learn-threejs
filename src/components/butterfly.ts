@@ -4,10 +4,10 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 export async function createButterfly() {
   const mtlLoader = new MTLLoader();
-  const materialCreator = await mtlLoader.loadAsync('/assets/models/butterfly/butterfly.mtl');
+  const materialCreator = await mtlLoader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/butterfly/butterfly.mtl');
   const objLoader = new OBJLoader();
   objLoader.setMaterials(materialCreator);
-  const butterfly = await objLoader.loadAsync('/assets/models/butterfly/butterfly.obj');
+  const butterfly = await objLoader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/butterfly/butterfly.obj');
   [0, 1, 4, 6].forEach(i => {
     butterfly.children[i].rotation.z = 0.3 * Math.PI;
   });

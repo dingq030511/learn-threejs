@@ -12,7 +12,7 @@ export function createSphere() {
 
 export function createSphereMaterial(){
   const loader = new TextureLoader();
-  const texture = loader.load('/assets/textures/w_c.jpg');
+  const texture = loader.load(process.env.PUBLIC_PATH + 'assets/textures/w_c.jpg');
   return new MeshStandardMaterial({
     map: texture,
   });

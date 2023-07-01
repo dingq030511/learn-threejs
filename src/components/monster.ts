@@ -5,7 +5,7 @@ import { addClipActionFolder } from '../common/utils';
 
 export async function loadMonster() {
   const loader = new ColladaLoader();
-  const monster = await loader.loadAsync('/assets/models/monster/monster.dae');
+  const monster = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/monster/monster.dae');
   monster.scene.rotateZ(-0.2 * Math.PI);
   monster.scene.translateX(-20);
   monster.scene.translateY(-20);

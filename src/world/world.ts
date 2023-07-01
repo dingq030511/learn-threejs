@@ -145,8 +145,8 @@ export class World {
     // this.loop.updatables.push(parrot, flamingo, stork);
     // this.scene.add(parrot, flamingo, stork);
     const textureLoader = new TextureLoader();
-    const textureFlare = textureLoader.load('/assets/textures/flares/lensflare0.png');
-    const textureFlare3 = textureLoader.load('/assets/textures/flares/lensflare3.png');
+    const textureFlare = textureLoader.load(process.env.PUBLIC_PATH + 'assets/textures/flares/lensflare0.png');
+    const textureFlare3 = textureLoader.load(process.env.PUBLIC_PATH + 'assets/textures/flares/lensflare3.png');
     const flareColor = new Color(0xffaacc);
     const lensflare = new Lensflare();
     lensflare.addElement(new LensflareElement(textureFlare, 350, 0, flareColor));
@@ -179,7 +179,7 @@ export class World {
     // this.scene.add(parametricMesh);
     // const sprites = createSprites();
     // this.scene.add(sprites);
-    // const points = await createPoints('/assets/textures/particles/raindrop-3.png');
+    // const points = await createPoints(process.env.PUBLIC_PATH + 'assets/textures/particles/raindrop-3.png');
     // this.scene.add(points);
     // this.loop.register(()=>{
     //   const positionArray = points.geometry.getAttribute('position');
@@ -198,11 +198,11 @@ export class World {
     //   positionArray.needsUpdate = true;
     // });
     // const result = await Promise.all([
-    //   createPoints('/assets/textures/particles/snowflake1_t.png'),
-    //   createPoints('/assets/textures/particles/snowflake2_t.png'),
-    //   createPoints('/assets/textures/particles/snowflake3_t.png'),
-    //   createPoints('/assets/textures/particles/snowflake4_t.png'),
-    //   createPoints('/assets/textures/particles/snowflake5_t.png'),
+    //   createPoints(process.env.PUBLIC_PATH + 'assets/textures/particles/snowflake1_t.png'),
+    //   createPoints(process.env.PUBLIC_PATH + 'assets/textures/particles/snowflake2_t.png'),
+    //   createPoints(process.env.PUBLIC_PATH + 'assets/textures/particles/snowflake3_t.png'),
+    //   createPoints(process.env.PUBLIC_PATH + 'assets/textures/particles/snowflake4_t.png'),
+    //   createPoints(process.env.PUBLIC_PATH + 'assets/textures/particles/snowflake5_t.png'),
     // ]);
     // result.forEach(snow=>{
     //   this.scene.add(snow);
@@ -372,12 +372,12 @@ export class World {
 
   async loadBackground(){
     const urls = [
-      '/assets/textures/cubemap/flowers/right.png',
-      '/assets/textures/cubemap/flowers/left.png',
-      '/assets/textures/cubemap/flowers/top.png',
-      '/assets/textures/cubemap/flowers/bottom.png',
-      '/assets/textures/cubemap/flowers/front.png',
-      '/assets/textures/cubemap/flowers/back.png',
+      process.env.PUBLIC_PATH + 'assets/textures/cubemap/flowers/right.png',
+      process.env.PUBLIC_PATH + 'assets/textures/cubemap/flowers/left.png',
+      process.env.PUBLIC_PATH + 'assets/textures/cubemap/flowers/top.png',
+      process.env.PUBLIC_PATH + 'assets/textures/cubemap/flowers/bottom.png',
+      process.env.PUBLIC_PATH + 'assets/textures/cubemap/flowers/front.png',
+      process.env.PUBLIC_PATH + 'assets/textures/cubemap/flowers/back.png',
     ];
     const cubeLoader = new CubeTextureLoader();
     const background = await cubeLoader.loadAsync(urls);

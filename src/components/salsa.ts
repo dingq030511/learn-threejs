@@ -3,7 +3,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
 export async function loadSalsa() {
   const loader = new FBXLoader();
-  const model = await loader.loadAsync('/assets/models/fbx/fbxfile.fbx');
+  const model = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/fbx/fbxfile.fbx');
   // salsa.scale.set(0.2, 0.2, 0.2);
   // salsa.translateY(-13);
   // model.children.forEach(child=>{

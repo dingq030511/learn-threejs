@@ -3,7 +3,7 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 export async function createText() {
   const loader = new FontLoader();
-  const font = await loader.loadAsync('/assets/fonts/bitstream_vera_sans_mono_roman.typeface.json');
+  const font = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/fonts/bitstream_vera_sans_mono_roman.typeface.json');
   const options = {
     size: 10,
     height: 1,

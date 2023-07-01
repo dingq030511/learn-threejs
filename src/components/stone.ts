@@ -4,7 +4,7 @@ import { createCube } from './cube';
 export function createStone() {
   const stone = createCube();
   const loader = new TextureLoader();
-  const normalMap = loader.load('/assets/textures/general/plaster-normal.jpg');
+  const normalMap = loader.load(process.env.PUBLIC_PATH + 'assets/textures/general/plaster-normal.jpg');
   stone.material.normalMap = normalMap;
   stone.material.normalScale.set(1, 1);
   stone.position.x = 3;

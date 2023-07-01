@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export async function loadCesiumMan(){
   const loader = new GLTFLoader();
-  const model = await loader.loadAsync('/assets/models/CesiumMan/CesiumMan.gltf');
+  const model = await loader.loadAsync(process.env.PUBLIC_PATH + 'assets/models/CesiumMan/CesiumMan.gltf');
   const scene = model.scene;
   scene.scale.set(6,6,6);
   scene.translateY(-3);
