@@ -14,6 +14,8 @@ import {
   Object3D,
   OrthographicCamera,
   PerspectiveCamera,
+  Plane,
+  PlaneHelper,
   Raycaster,
   Scene,
   TextureLoader,
@@ -282,11 +284,25 @@ export class World {
     // this.listenerHelper.listen(shalf4, 'dblclick', this.shalfDblclickHandler)
     // this.listenerHelper.listen(shalf5, 'dblclick', this.shalfDblclickHandler)
     // this.listenerHelper.listen(cube, 'dblclick', this.cubeDblClickHandler);
-
+    const clipPlanes = [
+      new Plane( new Vector3( 1, 0, 0 ), 0 ),
+      // new Plane( new Vector3( 0, -1, 0 ), 0 ),
+      new Plane( new Vector3( 0, 0, -1 ), 0 )
+    ];
     const canisterModel = await loadLiquidNitrogenCanister();
     const canister = canisterModel.scene;
     canister.scale.set(6, 6, 6)
+    canister.position.y = -6
+    const material = (canister.children[0] as Mesh).material as MeshLambertMaterial;
+    material.clippingPlanes = clipPlanes;
+    material.side = DoubleSide;
+    material.clipIntersection = true
+    const helpers = new Group();
+    helpers.add(new PlaneHelper(clipPlanes[0], 12, 0xff0000));
+    helpers.add(new PlaneHelper(clipPlanes[1], 12, 0x00ff00));
+    // helpers.add(new PlaneHelper(clipPlanes[2], 12, 0x0000ff));
     this.scene.add(canister);
+    this.scene.add(helpers)
   }
 
   shalfClickHandler(mesh: Object3D){
